@@ -1,0 +1,10 @@
+beautifulsoup4
+openpyxl==2.6.3
+simplejson
+xlsxwriter
+xlrd
+codicefiscale
+pyxb
+
+
+
