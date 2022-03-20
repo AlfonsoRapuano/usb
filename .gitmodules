@@ -152,3 +152,8 @@
 	path = OCA/connector
 	url = git@github.com:OCA/connector.git
 	branch = 14.0
+
+[submodule "OCA/wms"]
+	path = OCA/wms
+	url = git@github.com:OCA/wms.git
+	branch = 14.0
