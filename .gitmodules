@@ -102,3 +102,8 @@
 	path = OCA/account-fiscal-rule
 	url = git@github.com:OCA/account-fiscal-rule.git
 	branch = 14.0
+
+[submodule "OCA/account-reconcile"]
+	path = OCA/account-reconcile
+	url = git@github.com:OCA/account-reconcile.git
+	branch = 14.0
