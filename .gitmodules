@@ -112,3 +112,8 @@
 	path = OCA/account-analytic
 	url = git@github.com:OCA/account-analytic.git
 	branch = 14.0
+
+[submodule "OCA/account-budgeting"]
+	path = OCA/account-budgeting
+	url = git@github.com:OCA/account-budgeting.git
+	branch = 14.0
