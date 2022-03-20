@@ -157,3 +157,8 @@
 	path = OCA/wms
 	url = git@github.com:OCA/wms.git
 	branch = 14.0
+
+[submodule "OCA/multi-company"]
+	path = OCA/multi-company
+	url = git@github.com:OCA/multi-company.git
+	branch = 14.0
