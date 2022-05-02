@@ -197,3 +197,8 @@
 	path = OCA/contract
 	url = git@github.com:OCA/contract.git
 	branch = 14.0
+
+[submodule "OCA/credit-control"]
+	path = OCA/credit-control
+	url = git@github.com:OCA/credit-control.git
+	branch = 14.0
