@@ -217,3 +217,8 @@
 	path = OCA/helpdesk
 	url = git@github.com:OCA/helpdesk.git
 	branch = 14.0
+
+[submodule "OCA/sale-reporting"]
+	path = OCA/sale-reporting
+	url = git@github.com:OCA/sale-reporting.git
+	branch = 14.0
