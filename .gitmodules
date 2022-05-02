@@ -192,3 +192,8 @@
 	path = OCA/product-variant
 	url = git@github.com:OCA/product-variant.git
 	branch = 14.0
+
+[submodule "OCA/contract"]
+	path = OCA/contract
+	url = git@github.com:OCA/contract.git
+	branch = 14.0
