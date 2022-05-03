@@ -252,3 +252,8 @@
 	path = OCA/stock-logistics-barcode
 	url = git@github.com:OCA/stock-logistics-barcode.git
 	branch = 14.0
+
+[submodule "OCA/stock-logistics-transport"]
+	path = OCA/stock-logistics-transport
+	url = git@github.com:OCA/stock-logistics-transport.git
+	branch = 14.0
