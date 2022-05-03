@@ -227,3 +227,8 @@
 	path = OCA/sale-promotion
 	url = git@github.com:OCA/sale-promotion.git
 	branch = 14.0
+
+[submodule "OCA/sale-financial"]
+	path = OCA/sale-financial
+	url = git@github.com:OCA/sale-financial.git
+	branch = 14.0
