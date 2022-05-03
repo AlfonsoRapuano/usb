@@ -242,3 +242,8 @@
 	path = OCA/stock-logistics-reporting
 	url = git@github.com:OCA/stock-logistics-reporting.git
 	branch = 14.0
+
+[submodule "OCA/mis-builder-contrib"]
+	path = OCA/mis-builder-contrib
+	url = git@github.com:OCA/mis-builder-contrib.git
+	branch = 14.0
