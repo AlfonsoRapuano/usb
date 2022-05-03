@@ -232,3 +232,8 @@
 	path = OCA/sale-financial
 	url = git@github.com:OCA/sale-financial.git
 	branch = 14.0
+
+[submodule "OCA/purchase-reporting"]
+	path = OCA/purchase-reporting
+	url = git@github.com:OCA/purchase-reporting.git
+	branch = 14.0
