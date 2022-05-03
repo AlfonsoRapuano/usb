@@ -247,3 +247,8 @@
 	path = OCA/mis-builder-contrib
 	url = git@github.com:OCA/mis-builder-contrib.git
 	branch = 14.0
+
+[submodule "OCA/stock-logistics-barcode"]
+	path = OCA/stock-logistics-barcode
+	url = git@github.com:OCA/stock-logistics-barcode.git
+	branch = 14.0
