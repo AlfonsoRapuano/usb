@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="all_basic_form_view" model="ir.ui.view">
+        <field name="name">all.basic.form.view</field>
+        <field name="model">sh.all.in.one.basic.kanban</field>
+        <field name="arch" type="xml">
+            <form string="All Basic Import" create="false" edit="false">
+                <sheet>
+                    <group>
+                        <field name="name" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="sh_all_in_one_basic_import_kanban">
+        <field name="name">sh.all.in.one.basic.import.kanban</field>
+        <field name="model">sh.all.in.one.basic.kanban</field>
+        <field name="arch" type="xml">
+            <kanban create="false">
+                <field name="name" />
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click" style="width: 100%;">
+                            <br />
+                            <div class="row">
+                                <div class="col-3">
+                                    <button name="%(sh_all_in_one_basic_import.sh_import_inv_action)d" type="action" string="Import Invoice" class="btn btn-primary">
+                                        Import Invoice
+                                    </button>
+                                </div>
+                                <div class="col-3">
+                                    <button name="%(sh_all_in_one_basic_import.sh_import_partner_action)d" type="action" string="Import Partner" class="btn btn-primary">
+                                        Import Partner
+                                    </button>
+                                </div>
+                                <div class="col-3">
+                                    <button name="%(sh_all_in_one_basic_import.sh_import_so_action)d" type="action" string="Import SO" class="btn btn-primary">
+                                        Import SO
+                                    </button>
+                                </div>
+                                <div class="col-3">
+                                    <button name="%(sh_all_in_one_basic_import.sh_import_po_action)d" type="action" string="Import PO" class="btn btn-primary">
+                                        Import PO
+                                    </button>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-3">
+                                    <button name="%(sh_all_in_one_basic_import.sh_import_product_tmpl_action)d" type="action" string="Import Product" class="btn btn-primary">
+                                        Import Product
+                                    </button>
+                                </div>
+                                <div class="col-3">
+                                    <button name="%(sh_all_in_one_basic_import.sh_import_product_var_action)d" type="action" string="Import Product Variants" class="btn btn-primary">
+                                        Import Product Variants
+                                    </button>
+                                </div>
+                                <div class="col-3">
+                                    <button name="%(sh_all_in_one_basic_import.sh_import_inventory_with_lot_serial_action)d" type="action" string="Import Inventory With Lot/Serial No" class="btn btn-primary">
+                                        Import Inventory With Lot/Serial No
+                                    </button>
+                                </div>
+                                <div class="col-3">
+                                    <button name="%(sh_all_in_one_basic_import.sh_import_inventory_without_lot_serial_action)d" type="action" string="Import Inventory Without Lot/Serial" class="btn btn-primary">
+                                        Import Inventory Without Lot/Serial
+                                    </button>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="row">
+                            	<div class="col-3">
+                            		<button name="%(sh_all_in_one_basic_import.sh_import_inv_with_payment_action)d" type="action" string="Import Invoice With Payment" class="btn btn-primary">
+                                        Import Invoice With Payment
+                                    </button>
+                            	</div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+    <record id="sh_action_all_in_one_basic_import_kanban" model="ir.actions.act_window">
+        <field name="name">All Basic Import</field>
+        <field name="res_model">sh.all.in.one.basic.kanban</field>
+        <field name="view_mode">kanban,form</field>
+        <field name="view_id" ref="sh_all_in_one_basic_import_kanban" />
+    </record>
+    <menuitem id="sh_menu_all_basic_import" name="All Basic Import" action="sh_action_all_in_one_basic_import_kanban" sequence="1" groups="sh_all_in_one_basic_import.sh_all_in_one_basic_import" />
+</odoo>
