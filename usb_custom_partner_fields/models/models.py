@@ -58,7 +58,7 @@ class ResPartner(models.Model):
     des_agente_anagrafica = fields.Char()
     des_attivita = fields.Char(string = "Des. Attività")
     
-    country_id = fields.Many2one('res.country', string='Nazione Fatturazione')
+    fatturazione_country_id = fields.Many2one('res.country', string='Nazione Fatturazione')
     
     gender = fields.Selection(
         [("male", "Male"), ("female", "Female"), ("other", "Other")]
