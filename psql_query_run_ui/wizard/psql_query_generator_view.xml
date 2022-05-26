@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record model="ir.ui.view" id="sql_query_generator_wiz_view">
+       <field name="name">sql.query.generator.form</field>
+       <field name="model">sql.query.generator</field>
+       <field name="arch" type="xml">
+            <form string="SQL Query Generator">
+                <header>
+                    <button class="btn-primary" name="%(confirm_query_execute_wiz_action)d" type="action" string="RUN" groups="psql_query_run_ui.grp_psql_query_generate"/>
+                </header>
+                <sheet>
+                    <group name="query" string="SQL Query"/>
+                    <field name="name"/>
+                    <group name="excel_output" string="Excel Output">
+                        <field name="excel_file" invisible="1"/>
+                        <field name="xls_output" filename='excel_file' readonly='1' nolabel='1'/>
+                    </group>
+                    <group name="query" string="Query Result"/>
+                    <h2><field name="query_result" readonly='1'/></h2>
+                    <notebook>
+                        <page name="model_field_search" string="Model / Field Search">
+                            <group>
+                                <group>
+                                    <field name="search_model" options='{"no_create": True}'/>
+                                    <field name="searched_model_name"/>
+                                </group>
+                                <group>
+                                    <field name="search_field" options='{"no_create": True}'/>
+                                    <field name="searched_field_name" />
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+       </field>
+   </record>
+   
+   <record id="sql_query_generator_wiz_action" model="ir.actions.act_window">
+        <field name="name">Execute SQL Query</field>
+        <field name="res_model">sql.query.generator</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="sql_query_generator_wiz_view"/>
+    </record>
+
+    <menuitem id="generat_sql_query_menu" name="Execute Query" action="sql_query_generator_wiz_action" parent="psql_query_run_ui.sql_query_generator_menu" groups="psql_query_run_ui.grp_psql_query_generate"/>
+
+</odoo>

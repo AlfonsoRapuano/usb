@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record model="ir.ui.view" id="confirm_query_perform_wiz_view">
+       <field name="name">confirm.query.perform.form</field>
+       <field name="model">confirm.query.perform</field>
+       <field name="arch" type="xml">
+            <form string="Query Execution Confirmation Wizard" create="false" edit="false">
+                <sheet>
+                    <group>
+                        <field name="is_confirm_to_perform_query"/>
+                    </group>
+                    <footer>
+                        <button class="btn-primary" name="action_confirm_query" type="object" string="Confirm" groups="psql_query_run_ui.grp_psql_query_generate"/>
+                       <button string="Cancel" class="btn-default" special="cancel"/>
+                   </footer>
+                </sheet>
+            </form>
+       </field>
+   </record>
+
+   <record id="confirm_query_execute_wiz_action" model="ir.actions.act_window">
+        <field name="name">Confirm to Execute Query</field>
+        <field name="res_model">confirm.query.perform</field>
+        <field name="context">{'delete':False, 'create':False}</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="confirm_query_perform_wiz_view"/>
+        <field name="target">new</field>
+    </record>
+
+</odoo>

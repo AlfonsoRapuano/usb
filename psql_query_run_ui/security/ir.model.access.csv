@@ -1,0 +1,4 @@
+id,name,model_id/id,group_id/id,perm_read,perm_write,perm_create,perm_unlink
+access_query_result_history_query_generate,query_result_history_query_generate,psql_query_run_ui.model_query_result_history,psql_query_run_ui.grp_psql_query_generate,1,1,1,0
+access_confirm_query_perform,access.confirm.query.perform,psql_query_run_ui.model_confirm_query_perform,psql_query_run_ui.grp_psql_query_generate,1,1,1,0
+access_sql_query_generator,access.sql.query.generator,psql_query_run_ui.model_sql_query_generator,psql_query_run_ui.grp_psql_query_generate,1,1,1,0

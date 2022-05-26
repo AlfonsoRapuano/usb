@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="sql_query_result_history_form" model="ir.ui.view">
+       <field name="name">Query Result History Form</field>
+       <field name="model">query.result.history</field>
+       <field name="arch" type="xml">
+            <form string="Query Result History Form" create="false" edit="false">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="query_message"/>
+                    </group>
+                    <group>
+                        <field name="query_run_datetime"/>
+                        <field name="query_run_by"/>
+                    </group>
+                </sheet>
+            </form>
+       </field>
+    </record>
+
+    <record id="sql_query_result_history_tree" model="ir.ui.view">
+        <field name="name">Query Result History List</field>
+        <field name="model">query.result.history</field>
+        <field name="arch" type="xml">
+            <tree string="Query Result History List" create="false" edit="false">
+                <field name="name"/>
+                <field name="query_run_datetime"/>
+                <field name="query_run_by"/>
+            </tree>
+        </field>
+    </record>
+
+   <record id="query_result_history_action" model="ir.actions.act_window">
+        <field name="name">Query Result Logs</field>
+        <field name="res_model">query.result.history</field>
+        <field name="context">{'create':False,'edit':False}</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="sql_query_generator_menu" name="Execute SQL Query" parent="base.menu_custom" groups="psql_query_run_ui.grp_psql_query_generate"/>
+    <menuitem id="sql_query_result_history" name="Query Result Logs" action="query_result_history_action" parent="psql_query_run_ui.sql_query_generator_menu"/>
+
+</odoo>

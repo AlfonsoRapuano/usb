@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="edit_project_inherit_assign_multi_users" model="ir.ui.view">
+            <field name="name">project.project.form.inherit.assign.multi.user</field>
+            <field name="model">project.project</field>
+            <field name="inherit_id" ref="project.edit_project"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='privacy_visibility']" position="after">
+                        <field name="assign_user_ids" domain="[('share','!=',True)]" widget="many2many_tags"/>
+                </xpath>
+            </field>
+        </record>
+        
+        <record id="view_task_form2_inherit_assign_multi_users" model="ir.ui.view">
+            <field name="name">project.task.form.inherit.assign.multi.user</field>
+            <field name="model">project.task</field>
+            <field name="inherit_id" ref="project.view_task_form2"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='user_id']" position="after">
+                        <field name="assign_user_ids" domain="[('share','!=',True)]" widget="many2many_tags"/>
+                </xpath>
+            </field>
+        </record>
+        
+        <record id="view_task_search_form_inherit_assigned_user_filter" model="ir.ui.view">
+            <field name="name">project.task.inherit.filter.assigned_users</field>
+            <field name="model">project.task</field>
+            <field name="inherit_id" ref="project.view_task_search_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='tag_ids']" position="after">
+                    <field name="assign_user_ids" domain="[('share','!=',True)]" string="Responsible Users"/>
+                </xpath>
+            </field>
+        </record>
+        
+    </data>
+</odoo>
