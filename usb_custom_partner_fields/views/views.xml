@@ -1,60 +1,54 @@
 <odoo>
   <data>
-    <!-- explicit list view definition -->
-<!--
-    <record model="ir.ui.view" id="usb_custom_partner_fields.list">
-      <field name="name">usb_custom_partner_fields list</field>
-      <field name="model">usb_custom_partner_fields.usb_custom_partner_fields</field>
-      <field name="arch" type="xml">
-        <tree>
-          <field name="name"/>
-          <field name="value"/>
-          <field name="value2"/>
-        </tree>
-      </field>
+      <!-- Declared the same in every module that may need it -->
+    <record id="usb_custom_fields" model="ir.ui.view">
+        <field name="name">USB Custom Fields</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form" />
+        <field name="priority">2</field>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='internal_notes']" position="after">
+                <page
+                    name="usb_custom_fields"
+                    string="USB Custom Fields"
+                >
+                    <!-- informazioni anagrafiche -->
+                    <group name="informazioni_anagrafiche" string="Informazioni Anagrafiche" attrs="{'invisible': [('is_company','=',True)]}" >
+                        <field name="gender" />
+                        <field name="nato_il" />
+                        <field name="luogo_di_nascita" />
+                        <field name="provinca_di_nascita" />
+                        <field name="doc_type" />
+                        <field name="doc_num" />
+                        <field name="doc_emesso_il" />
+                        <field name="doc_scadenza" />
+                        <field name="luogo_emissione_documento" />
+                    </group>
+                    
+                    <!-- informazioni tecniche -->
+                    <group name="informazioni_tecniche" string="Informazioni Tecniche" attrs="{'invisible': [('is_company','=',False)]}" >
+                        <field name="associazione" />
+                        <field name="des_categoria_merceologica" />
+                        <field name="des_gruppo_anagrafica" />
+                        <field name="des_agente_anagrafica" />
+                        <field name="des_attivita" />
+                        <field name="fatturazione_country_id" />
+                    </group>
+                    
+                    <!-- informazioni varie -->
+                    <group name="informazioni_varie" string="Varie" attrs="{'invisible': [('is_company','=',False)]}" >
+                        <field name="id_cliente_USB" />
+                        <field name="vies" />
+                        <field name="split_payment" />
+                        <field name="tipo_esenzione" />
+                        <field name="gdpr1" />
+                        <field name="gdpr2" />
+                        <field name="anag_da_escludere" />
+                        <field name="data_ins_canc_newsletter" />
+                    </group>
+                </page>
+            </xpath>
+        </field>
     </record>
--->
-
-    <!-- actions opening views on models -->
-<!--
-    <record model="ir.actions.act_window" id="usb_custom_partner_fields.action_window">
-      <field name="name">usb_custom_partner_fields window</field>
-      <field name="res_model">usb_custom_partner_fields.usb_custom_partner_fields</field>
-      <field name="view_mode">tree,form</field>
-    </record>
--->
-
-    <!-- server action to the one above -->
-<!--
-    <record model="ir.actions.server" id="usb_custom_partner_fields.action_server">
-      <field name="name">usb_custom_partner_fields server</field>
-      <field name="model_id" ref="model_usb_custom_partner_fields_usb_custom_partner_fields"/>
-      <field name="state">code</field>
-      <field name="code">
-        action = {
-          "type": "ir.actions.act_window",
-          "view_mode": "tree,form",
-          "res_model": model._name,
-        }
-      </field>
-    </record>
--->
-
-    <!-- Top menu item -->
-<!--
-    <menuitem name="usb_custom_partner_fields" id="usb_custom_partner_fields.menu_root"/>
--->
-    <!-- menu categories -->
-<!--
-    <menuitem name="Menu 1" id="usb_custom_partner_fields.menu_1" parent="usb_custom_partner_fields.menu_root"/>
-    <menuitem name="Menu 2" id="usb_custom_partner_fields.menu_2" parent="usb_custom_partner_fields.menu_root"/>
--->
-    <!-- actions -->
-<!--
-    <menuitem name="List" id="usb_custom_partner_fields.menu_1_list" parent="usb_custom_partner_fields.menu_1"
-              action="usb_custom_partner_fields.action_window"/>
-    <menuitem name="Server to list" id="usb_custom_partner_fields" parent="usb_custom_partner_fields.menu_2"
-              action="usb_custom_partner_fields.action_server"/>
--->
   </data>
 </odoo>
