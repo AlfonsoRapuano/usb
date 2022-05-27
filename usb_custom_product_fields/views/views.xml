@@ -11,6 +11,8 @@
                         <field name="costo_banca" />
                         <field name="costo_sito" />
                         <field name="costo_gmb" />
+                        <field name="costo_seo" />
+                        <field name="costo_varie" />
                         <field name="costo_virtual_tour" />
                         <field name="costo_social" />
                         <field name="costo_adwords" />
