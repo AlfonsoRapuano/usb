@@ -22,8 +22,8 @@
                 expr="//field[@name='order_line']/tree/field[@name='product_uom_qty']"
                 position="before"
             >
-                <field name="prog_riga_ordine_USB" />
-                <field name="id_prodotto_USB" />
+                <field name="prog_riga_ordine_USB" optional="hide" />
+                <field name="id_prodotto_USB" optional="hide" />
             </xpath>
             
             <notebook position="inside">
