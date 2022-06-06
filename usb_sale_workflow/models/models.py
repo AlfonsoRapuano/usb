@@ -21,7 +21,6 @@ class SaleOrder(models.Model):
     numero_rate = fields.Integer("Numero Rate Pagamento")
     data_pda = fields.Date("Data PDA")
     data_stato_ordine = fields.Date("Data Stato Ordine")
-    payment_method_id = fields.Many2one('account.payment.method', string='Metodo di pagamento')
     agente_id = fields.Many2one('res.partner', string='Agente')
     
     usb_sale_group_id = fields.Many2one('usb.sale.group', string='Gruppo')

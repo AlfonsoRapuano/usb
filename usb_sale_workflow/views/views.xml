@@ -35,7 +35,6 @@
                         <field name="numero_rate" />
                         <field name="data_pda" />
                         <field name="data_stato_ordine" />
-                        <field name="payment_method_id" />
                         <field name="agente_id" />
                         <field name="usb_sale_group_id" />
                         <field name="usb_sale_macro_group_id" />
