@@ -26,6 +26,20 @@ class SaleOrder(models.Model):
     usb_sale_group_id = fields.Many2one('usb.sale.group', string='Gruppo')
     usb_sale_macro_group_id = fields.Many2one('usb.sale.macro.group', string='Capogruppo')
     
+    # https://www.odoo.com/it_IT/forum/assistenza-1/how-to-add-a-new-status-in-sale-order-in-odoo-9-110398
+    state = fields.Selection([   
+        ('draft', 'Preventivo'),
+        ('sent', 'Preventivo Inviato'),    
+        ('sale', 'Ordine di Vendita'),
+        ('pending', 'Pending'),
+        ('done', 'Completato'),
+        ('cancel', 'Annullato'),
+        
+        ('cessato', 'Cessato'),
+        ('sospeso', 'Sospeso'),
+        
+    ], string='Status', readonly=True, copy=False, index=True, track_visibility='onchange', default='draft')
+    
     
 class SaleOrderLine(models.Model):
     _inherit = "sale.order.line"

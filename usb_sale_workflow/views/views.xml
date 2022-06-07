@@ -5,6 +5,12 @@
         <field name="model">sale.order</field>
         <field name="inherit_id" ref="sale.view_order_form" />
         <field name="arch" type="xml">
+            <xpath
+                expr="//field[@name='state']"
+                position="replace"
+            >
+                <field name="state" widget="statusbar" statusbar_visible="draft,sent,sale,cessato,sospeso"/>
+            </xpath>
             <!--<xpath
                 expr="//field[@name='order_line']/form/field[@name='name']"
                 position="after"
