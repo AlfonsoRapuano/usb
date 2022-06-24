@@ -34,11 +34,28 @@ class SaleOrder(models.Model):
         ('pending', 'Pending'),
         ('done', 'Completato'),
         ('cancel', 'Annullato'),
-        
         ('cessato', 'Cessato'),
         ('sospeso', 'Sospeso'),
-        
     ], string='Status', readonly=True, copy=False, index=True, track_visibility='onchange', default='draft')
+    
+    
+    usb_custom_state = fields.Selection([   
+        ('draft', 'Preventivo'),
+        ('sent', 'Preventivo Inviato'),    
+        ('sale', 'Ordine di Vendita'),
+        ('pending', 'Pending'),
+        ('done', 'Completato'),
+        ('cancel', 'Annullato'),
+        ('cessato', 'Cessato'),
+        ('sospeso', 'Sospeso'),
+    ], string='Status (tecnico)', copy=False, index=True, default='draft')
+    
+    
+    def action_set_cessato(self):
+        return self.write({'state': 'cessato'})
+
+    def action_set_sospeso(self):
+        return self.write({'state': 'sospeso'})
     
     
 class SaleOrderLine(models.Model):

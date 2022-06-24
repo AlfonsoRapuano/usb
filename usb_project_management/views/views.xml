@@ -1,0 +1,59 @@
+<odoo>
+  <data>
+      <!-- rimuoviamo le vecchie fasi dalla search view in odoo -->
+      <record id="gesca_custom_view_task_filter_inherit" model="ir.ui.view">
+             <field name="name">gesca.custom.task.search.inherit</field>
+             <field name="model">project.task</field>
+             <field name="inherit_id" ref="project.view_task_search_form"/>
+             <field name="arch" type="xml">
+                 <xpath expr="//filter[@name='stage']" position="replace">
+                     <!--<filter string="Fasi del progetto" name="project_phases" context="{'group_by': 'project_phase_id'}"/>-->
+                 </xpath>
+             </field>
+        </record>
+      
+      <!-- Project Task Kanban View -->
+        <record model="ir.ui.view" id="gesca_custom_view_task_kanban">
+            <field name="name">gesca.custom.project.task.kanban</field>
+            <field name="inherit_id" ref="project.view_task_kanban"/>
+            <field name="model">project.task</field>
+            <field name="arch" type="xml">
+                <xpath expr="//kanban" position="attributes">
+                    <attribute name="default_group_by">project_phase_id</attribute>
+                </xpath>
+            </field>
+         </record>
+      
+         <!-- Project -->
+        <record model="ir.ui.view" id=">gesca_project_form_inherit">
+            <field name="name">>gesca.project.form.inherit</field>
+            <field name="inherit_id" ref="project.edit_project"/>
+            <field name="model">project.project</field>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='company_id']" position="after">
+                    <field name="project_order" readonly="1"/>
+                </xpath>
+            </field>
+         </record>
+      
+          <!-- Project tree view -->
+         <record model="ir.ui.view" id="gesca_custom_project_task_tree_view">
+            <field name="name">gesca.custom.project.tree</field>
+            <field name="model">project.project</field>
+            <field name="arch" type="xml">
+                <tree string="Projects">
+                    <field name="name" class="font-weight-bold"/>
+                    <field name="user_id" widget="many2one_avatar_user"/>
+                    <field name="partner_id"/>
+                </tree>
+            </field>
+         </record> 
+      
+         <record id="action_project_tree_view" model="ir.actions.act_window.view">
+            <field name="sequence" eval="1"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="gesca_custom_project_task_tree_view"/>
+            <field name="act_window_id" ref="project.open_view_project_all"/>
+        </record> 
+  </data>
+</odoo>

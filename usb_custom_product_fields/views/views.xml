@@ -18,6 +18,18 @@
                         <field name="costo_adwords" />
                     </group>
                 </page>
+                
+                <page name="dati_tecnici" string="Dati Tecnici">
+                    <group >
+                        <field name="product_qty" />
+                        <field name="budget" />
+                        <field name="plugin_type" />
+                        <field name="art_mark_qty" />
+                        <field name="article" />
+                        <field name="super_key" />
+                        <field name="qty_panoramiche" />
+                    </group>
+                </page>
             </xpath>
         </field>
     </record>
