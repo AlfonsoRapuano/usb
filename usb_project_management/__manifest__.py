@@ -15,10 +15,10 @@
     # Check https://github.com/odoo/odoo/blob/14.0/odoo/addons/base/data/ir_module_category_data.xml
     # for the full list
     'category': 'Services/Project',
-    'version': '0.1',
+    'version': '0.2',
 
     # any module necessary for this one to work correctly
-    'depends': ['base','project','sale_project', 'odoo_project_phases'],
+    'depends': ['base','project','sale_project', 'odoo_project_phases', 'task_substak_checklist'],
 
     # always loaded
     'data': [

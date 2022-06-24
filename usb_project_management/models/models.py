@@ -7,7 +7,7 @@ _logger = logging.getLogger("====== USB Project Management ======")
 class ProjectProjectInherit(models.Model):
     _inherit = "project.project"
     
-    project_order = fields.Boolean('Progetto Ordine di vendita')
+    project_order = fields.Boolean('Progetto Ordine di vendita',copy=False)
     
     @api.model
     def create(self, values):
@@ -33,21 +33,6 @@ class ProjectProjectInherit(models.Model):
                 
         return res
     
-    def _action_confirm(self):
-        """ On SO confirmation, some lines should generate a task or a project. """
-        result = super()._action_confirm()
-        if len(self.company_id) == 1:
-            # All orders are in the same company
-            self.order_line.sudo().with_company(self.company_id)._timesheet_service_generation()
-            # self.project_id = 
-            # project = self.env['project.project'].search([('project_order','=', True)]).copy()
-
-        else:
-            # Orders from different companies are confirmed together
-            for order in self:
-                order.order_line.sudo().with_company(order.company_id)._timesheet_service_generation()
-        return result
-    
     
 class SaleOrder(models.Model):
     _inherit = "sale.order"   
@@ -63,6 +48,26 @@ class SaleOrder(models.Model):
 
             order.project_ids = projects
             # order.tasks_ids = self.env['project.task'].search(['|', ('sale_line_id', 'in', order.order_line.ids), ('sale_order_id', '=', order.id)])
+            
+    def _action_confirm(self):
+        """ On SO confirmation, some lines should generate a task or a project. """
+        result = super()._action_confirm()
+        if len(self.company_id) == 1:
+            # All orders are in the same company
+            self.order_line.sudo().with_company(self.company_id)._timesheet_service_generation()
+            # copia un progetto e lo  aggiunge all'ordine di vendita
+            project = self.env['project.project'].search([('project_order','=', True)]).copy()
+            project.name = "%s - %s - Servizio Welcome - xOO" % (self.name, project.name.replace('(copia)',''))
+            project.partner_id = self.partner_id.id
+            project.sale_order_id = self.id
+            project.active: True
+            project.company_id: self.company_id.id
+
+        else:
+            # Orders from different companies are confirmed together
+            for order in self:
+                order.order_line.sudo().with_company(order.company_id)._timesheet_service_generation()
+        return result
                 
             
             
@@ -136,7 +141,6 @@ class SaleOrderLine(models.Model):
                 if sol.product_id.project_template_id:
                     #controllo la quantità
                     if sol.product_uom_qty:
-                        _logger.info("controllo la quantità")
                         return (sol.order_id.id, sol.product_id.project_template_id.id) not in map_so_project_templates
                 elif sol.order_id.id not in map_so_project:
                     return True
@@ -152,7 +156,7 @@ class SaleOrderLine(models.Model):
             - 'project_only': the project_id can only come from the sale order line itself
             - 'task_in_project': the project_id comes from the sale order line only if no project_id was configured
               on the parent sale order"""
-            _logger.info("determine_project")
+
             if so_line.product_id.service_tracking == 'project_only':
                 return so_line.project_id
             elif so_line.product_id.service_tracking == 'task_in_project':
