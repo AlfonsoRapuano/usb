@@ -18,7 +18,7 @@
     'version': '0.2',
 
     # any module necessary for this one to work correctly
-    'depends': ['base','project','sale_project', 'odoo_project_phases', 'task_substak_checklist'],
+    'depends': ['base','project','sale_project', 'odoo_project_phases'],
 
     # always loaded
     'data': [
