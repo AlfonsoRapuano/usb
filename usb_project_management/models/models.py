@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from odoo import fields, models, api
+from odoo import fields, models, api, _
 import logging
 _logger = logging.getLogger("====== USB Project Management ======")
 
@@ -55,14 +55,18 @@ class SaleOrder(models.Model):
         if len(self.company_id) == 1:
             # All orders are in the same company
             self.order_line.sudo().with_company(self.company_id)._timesheet_service_generation()
-            # copia un progetto e lo  aggiunge all'ordine di vendita
-            project = self.env['project.project'].search([('project_order','=', True)]).copy()
-            project.name = "%s - %s - Servizio Welcome - xOO" % (self.name, project.name.replace('(copia)',''))
-            project.partner_id = self.partner_id.id
-            project.sale_order_id = self.id
-            project.active: True
-            project.company_id: self.company_id.id
 
+            if not self.project_id: 
+                # copia un progetto e lo  aggiunge all'ordine di vendita
+                project = self.env['project.project'].search([('project_order','=', True)]).copy()
+                # X usb ci dirà con quale parola dovremmo sostiurlo
+                project.name = "%s - %s - XOO" % (self.name, project.name.replace('(copia)',''))
+                project.partner_id = self.partner_id.id
+                project.sale_order_id = self.id
+                project.active: True
+                project.company_id: self.company_id.id
+
+                self.write({'project_id': project.id})
         else:
             # Orders from different companies are confirmed together
             for order in self:
@@ -85,7 +89,8 @@ class SaleOrderLine(models.Model):
         values = self._timesheet_create_project_prepare_values()
         
         if self.product_id.project_template_id:
-            values['name'] = "%s - %s - %s - x0%s" % (values['name'], self.product_id.project_template_id.name, self.product_id.name, str(project_num))
+            # X usb ci dirà con quale parola dovremmo sostiurlo
+            values['name'] = "%s  - %s - X0%s" % (values['name'], self.product_id.name, str(project_num))
             project = self.product_id.project_template_id.copy(values)
             project.tasks.write({
                 'sale_line_id': self.id,
