@@ -30,6 +30,22 @@
             <field name="inherit_id" ref="project.edit_project"/>
             <field name="model">project.project</field>
             <field name="arch" type="xml">
+                
+                <xpath expr="//page[@name='settings']" position="after">
+                    <page name="dati_tecnici" string="Dati Tecnici Prodotto">
+                        <group >
+                            <field name="product_qty" />
+                            <field name="budget" />
+                            <field name="plugin_type" />
+                            <field name="art_mark_qty" />
+                            <field name="article" />
+                            <field name="super_key" />
+                            <field name="qty_panoramiche" />
+                        </group>
+                    </page>
+                </xpath>
+                
+                
                 <xpath expr="//field[@name='company_id']" position="after">
                     <field name="project_order" readonly="1"/>
                 </xpath>

@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "USB Project Management",
+    'name': "Gesca Product Pack",
 
     'summary': """
-        Gestione dei progetti personalizzata per USB""",
+        Aggiunge alle righe ordine di vendita i prodotti presenti nel prodotto/pack""",
 
     'description': """
-        Gestione dei progetti personalizzata per USB""",
+        Aggiunge alle righe ordine di vendita i prodotti presenti nel prodotto/pack""",
 
     'author': "Gesca",
     'website': "https://gesca.it",
@@ -14,11 +14,11 @@
     # Categories can be used to filter modules in modules listing
     # Check https://github.com/odoo/odoo/blob/14.0/odoo/addons/base/data/ir_module_category_data.xml
     # for the full list
-    'category': 'Services/Project',
-    'version': '0.2',
+    'category': 'Sales',
+    'version': '14.0.0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base','project','sale_project', 'odoo_project_phases', 'usb_custom_product_fields'],
+    'depends': ['base', 'product_bundle_pack_advance'],
 
     # always loaded
     'data': [

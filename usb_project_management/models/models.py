@@ -9,10 +9,37 @@ class ProjectProjectInherit(models.Model):
     
     project_order = fields.Boolean('Progetto Ordine di vendita',copy=False)
     
+    # dati tecnici
+    product_qty = fields.Integer('Quantità prodotti', readonly=True)
+    budget = fields.Integer('Budget', readonly=True)
+    plugin_type = fields.Selection(
+        [ 
+            ('booking_landing', 'BOOKING LANDING'),
+            ('facebook', 'FACEBOOK'),
+            ('form_landing', 'FORM LANDING'),
+            ('messenger', 'MESSENGER'),
+            ('whatsapp', 'WHATSAPP')
+        ],'Tipologia Plugin', readonly=True)
+    art_mark_qty = fields.Integer('Quantità Article Marketing', readonly=True)
+    article = fields.Boolean(readonly=True)
+    super_key = fields.Char('Super Key', readonly=True)
+    qty_panoramiche = fields.Integer('Quantità Panoramiche', readonly=True)
+    
     @api.model
     def create(self, values):
+        # aggiungiamo i dati tecnici al progetto nel momento della sua creazione
+        # a partire dai dati del prodotto
+        values.update({
+            'product_qty': self.sale_line_id.product_id.product_qty,
+            'budget': self.sale_line_id.product_id.budget,
+            'plugin_type': self.sale_line_id.product_id.plugin_type,
+            'art_mark_qty': self.sale_line_id.product_id.art_mark_qty,
+            'article': self.sale_line_id.product_id.article,
+            'super_key': self.sale_line_id.product_id.super_key,
+            'qty_panoramiche': self.sale_line_id.product_id.qty_panoramiche,
+        })
+        
         res = super(ProjectProjectInherit, self).create(values)
-        # here you can do accordingly
         return res
     
     def copy(self, default=None):
