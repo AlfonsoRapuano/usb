@@ -5,6 +5,13 @@ import logging
 _logger = logging.getLogger("===== GESCA Product Pack ======")
 
 
+class SaleOrder(models.Model):
+    _inherit = 'sale.order'
+    
+    def _get_invoiceable_lines(self, final=False):
+        return [i for i in super()._get_invoiceable_lines() if not i.pack_parent_line_id]
+    
+
 class Sale_order_line(models.Model):
     _inherit = 'sale.order.line'
     
