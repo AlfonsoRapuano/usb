@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+      <record id="custom_account_move_inherit" model="ir.ui.view">
+        <field name="name">custom.account.move.inherit</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form" />
+        <field name="arch" type="xml">
+            
+            <xpath expr="//field[@name='invoice_payment_term_id']" position="attributes">
+                <attribute name="options">{'no_create': False}</attribute>
+            </xpath>
+            
+            <xpath expr="//field[@name='invoice_payment_term_id']" position="after">
+                <field name="custom_payment_term" invisible="1" />
+            </xpath>
+            
+            <xpath expr="//page[@name='other_info']" position='after'>
+                <page string='Pagamenti e scadenze' attrs ="{'invisible':[('custom_payment_term','=', False)]}">
+                    <group>
+                        <field name="payment_method_id"/>
+                    </group>
+                        <field name="custom_payment_line_ids" string="Pagamenti e scadenze" attrs="{'readonly': [('state', '!=', 'draft')]}">
+                            <tree string="Pagamenti e scadenze" editable="bottom">
+                                <!-- <field name="invoice_id"/> -->
+                                <field name="payment_type"/>
+                                <!-- <field name="percentage" attrs="{'readonly': [('payment_type', '=', 'balance')]}"/>-->
+                                <!--<field name="percentage"/>-->
+                                <!-- <field name="amount_due" attrs="{'readonly': [('payment_type', '=', 'balance')]}"/> -->
+                                <!--<field name="fatturapa_pm_id"/>-->
+                                <field name="amount_due"/>
+                                <field name="date_due"/>
+                            </tree>
+                        </field>
+                </page>
+            </xpath>
+            
+        </field>
+    </record>
+    
+</odoo>

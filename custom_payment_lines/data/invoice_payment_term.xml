@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data noupdate="1">
+        <!-- categorie primarie da creare -->
+        <record id="custom_invoice_payment_term" model="account.payment.term">
+            <field name="name">Termine di Pagamento Personalizzato</field>
+            <field name="is_custom_payment_term" eval="True" />
+        </record>
+        
+    </data>
+</odoo>
