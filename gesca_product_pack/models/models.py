@@ -26,6 +26,8 @@ class Sale_order_line(models.Model):
     )
     pack_modifiable = fields.Boolean(help="The parent pack is modifiable")
     
+    is_pack = fields.Boolean(related='product_id.is_pack')
+    
     @api.model
     def create(self, vals):
         record = super().create(vals)
@@ -120,7 +122,7 @@ class ProductPack(models.Model):
         vals.update(
             {
                 "discount": sale_discount,
-                "name": "{}{}".format("> " * (line.pack_depth + 1), sol.name),
+                "name": "{}{} > {}".format("> " * (line.pack_depth + 1),sol.pack_parent_line_id.name, sol.name),
             }
         )
         return vals
