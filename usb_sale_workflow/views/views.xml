@@ -11,19 +11,25 @@
             >
                 <field name="state" widget="statusbar" statusbar_visible="draft,sent,sale,cessato,sospeso"/>
             </xpath>
-            <!--<xpath
-                expr="//field[@name='order_line']/form/field[@name='name']"
+            
+            <xpath
+                expr="//field[@name='partner_shipping_id']"
                 position="after"
             >
-                <group
-                    name="e_invoice"
-                    string="Electronic Invoice"
-                    groups="account.group_account_user"
-                >
-                    <field name="admin_ref" />
-                    <field name="related_documents" />
-                </group>
-            </xpath>-->
+                <field name="has_ecommerce_categ" invisible="1"/>
+                <field name="has_ads_categ" invisible="1"/>
+                <field name="has_facebook_categ" invisible="1"/>
+                <field name="has_gmb_categ" invisible="1"/>
+                <field name="has_instagram_categ" invisible="1"/>
+                <field name="has_landing_categ" invisible="1"/>
+                <field name="has_plugin_categ" invisible="1"/>
+                <field name="has_portale_categ" invisible="1"/>
+                <field name="has_seo_categ" invisible="1"/>
+                <field name="has_sito_categ" invisible="1"/>
+                <field name="has_virtual_tour_categ" invisible="1"/>
+            </xpath>
+            
+            
             <xpath
                 expr="//field[@name='order_line']/tree/field[@name='product_uom_qty']"
                 position="before"
@@ -33,8 +39,9 @@
             </xpath>
             
             <notebook position="inside">
+                
                 <page
-                    name="e_invoice"
+                    name="usb_custom_fields"
                     string="USB Custom Fields"
                 >
                     <group name="usb_custom_fields">
@@ -45,6 +52,628 @@
                         <field name="usb_sale_group_id" />
                         <field name="usb_sale_macro_group_id" />
                     </group>
+                    
+                    <!-- altri attributi -->
+                    <group>
+                        <field name="data_richiesta_disdetta" />
+                        <field name="data_disdetta_prenotata" />
+                        <field name="disdetta_prenotata" />
+                        <field name="tacito_rinnovo" />
+                        <!--<progressbar field="semaforo" colors='{"done": "success", "canceled": "danger", "normal": "muted"}'/>-->
+                        <field name="semaforo" />
+                        <field name="note_semaforo" />
+                    </group>
+                </page>
+                
+                <!-- Tipologie di link -->
+                <page
+                    name="usb_link_type"
+                    string="Tipologie di Link"
+                    attrs="{'invisible': [('state', '!=', 'sale')]}"
+                >
+                    <group>
+                        <field name="usb_link_type_ids" string="Tipologie di Link">
+                            <tree string="Tipologie di Link" editable="bottom">
+                                <field name="link_gmb"/>
+                                <field name="link_facebook"/>
+                                <field name="link_instagram"/>
+                                <field name="link_virtual_tour"/>
+                                <field name="link_portale_regionale"/>
+                            
+                                <!-- operatore e data -->
+                                <field name="write_uid"/>
+                                <field name="write_date"/>
+                            </tree>
+                        </field>
+                    </group>
+                    <group>
+                        <field name="usb_link_type_ids_2" string="Tipologie di Link (2)">
+                            <tree string="Tipologie di Link" editable="bottom">
+                                <field name="link_landing_page"/>
+                                <field name="dominio_proprieta_cliente_landing_page"/>
+                                <field name="data_acquisto_dominio_landing_page"/>
+                            
+                                <!-- operatore e data -->
+                                <field name="write_uid"/>
+                                <field name="write_date"/>
+                            </tree>
+                        </field>
+                    </group>
+                    <group>
+                        <field name="usb_link_type_ids_3" string="Tipologie di Link (3)">
+                            <tree string="Tipologie di Link" editable="bottom">
+                                <field name="link_sito"/>
+                                <field name="dominio_proprieta_cliente_sito"/>
+                                <field name="data_acquisto_dominio_sito"/>
+                            
+                                <!-- operatore e data -->
+                                <field name="write_uid"/>
+                                <field name="write_date"/>
+                            </tree>
+                        </field>
+                    </group>
+                    <group>
+                        <field name="usb_link_type_ids_4" string="Tipologie di Link (4)">
+                            <tree string="Tipologie di Link" editable="bottom">
+                                <field name="link_ecommerce"/>
+                                <field name="dominio_proprieta_cliente_ecommerce"/>
+                                <field name="data_acquisto_dominio_ecommerce"/>
+                            
+                                <!-- operatore e data -->
+                                <field name="write_uid"/>
+                                <field name="write_date"/>
+                            </tree>
+                        </field>
+                    </group>
+                    <group>
+                        <field name="usb_link_type_ids_5" string="Tipologie di Link (5)">
+                            <tree string="Tipologie di Link" editable="bottom">
+                                <field name="link_article_marketing_seo"/>
+                                <field name="provider_article"/>
+                            
+                                <!-- operatore e data -->
+                                <field name="write_uid"/>
+                                <field name="write_date"/>
+                            </tree>
+                        </field>
+                    </group>
+                </page>
+                
+                
+                
+                <!-- Interviste GMB -->
+                <page
+                    name="interviste_gmb"
+                    string="Interviste GMB"
+                    attrs="{'invisible':['|',('state', '!=', 'sale'),('has_gmb_categ','=',False)]}"
+                >
+                    <field name="interviste_gmb_ids" string="Interviste GMB">
+                        <tree string="Interviste GMB" editable="bottom">
+                            <field name="email_cliente_proprietaria"/>
+                            <field name="nome_pagina"/>
+                            <field name="indirizzo_gmb"/>
+                            
+                            <!-- operatore e data -->
+                            <field name="write_uid"/>
+                            <field name="write_date"/>
+                        </tree>
+                    </field>
+                    
+                    <field name="interviste_gmb_ids_2" string="Interviste GMB (2)">
+                        <tree string="Interviste GMB" editable="bottom">
+                            <field name="categoria_merceologica_attività_GMB"/>
+                            <field name="visibilità_indirizzo"/>
+                            <field name="orari_attività"/>
+                            <field name="telefono"/>
+                            <field name="cellulare"/>
+                            <field name="email_attività"/>
+                            <field name="sito_web"/>
+                            <field name="descrizione"/>
+                            <field name="note_GMB"/>
+                            <field name="servizi_GMB"/>
+                            <field name="link_da_inserire_GMB"/>
+                            
+                            <!-- operatore e data -->
+                            <field name="write_uid"/>
+                            <field name="write_date"/>
+                        </tree>
+                    </field>
+                    
+                    <field name="interviste_gmb_ids_3" string="Interviste GMB (3)">
+                        <tree string="Interviste GMB" editable="bottom">
+                            <field name="gmail_gmb_proprietaria_cliente"/>
+                            <field name="user_gmail_gmb"/>
+                            <field name="pw_gmail_per_gmb"/>
+                            
+                            <!-- operatore e data -->
+                            <field name="write_uid"/>
+                            <field name="write_date"/>
+                        </tree>
+                    </field>
+                </page>
+                
+                <!-- Interviste ADS -->
+                <page
+                    name="interviste_ads"
+                    string="Interviste ADS"
+                    attrs="{'invisible':['|',('state', '!=', 'sale'),('has_ads_categ','=',False)]}"
+                >
+                    <field name="interviste_ads_ids" string="Interviste ADS">
+                        <tree string="Interviste ADS" editable="bottom">
+                            <field name="nome_attività_ads"/>
+                            <field name="url_di_appoggio_ads"/>
+                            <field name="nr_di_telefono_ads"/>
+                            <field name="raggio_di_azione_ads"/>
+                            <field name="categoria_merceologica_ads"/>
+                            <field name="data_partenza_programmata_ads"/>
+                            
+                            <!-- operatore e data -->
+                            <field name="write_uid"/>
+                            <field name="write_date"/>
+                        </tree>
+                    </field>
+                    
+                    <field name="interviste_ads_ids_2" string="Interviste ADS">
+                        <tree string="Interviste ADS" editable="bottom">
+                            <field name="keywords_suggerite_dal_cliente_ads"/>
+                            <field name="keywords_utilizzate_ads"/>
+                            <field name="keywords_rinnovo_ads"/>
+                            
+                                <!-- operatore e data -->
+                                <field name="write_uid"/>
+                                <field name="write_date"/>
+                        </tree>
+                    </field>
+                    
+                    
+                    <field name="interviste_ads_ids_3" string="Interviste ADS">
+                        <tree string="Interviste ADS" editable="bottom">
+                            <field name="user_gmail_per_ads"/>
+                            <field name="pw_gmail_per_ads"/>
+                            
+                            <!-- operatore e data -->
+                            <field name="write_uid"/>
+                            <field name="write_date"/>
+                        </tree>
+                    </field>
+                    
+                </page>
+                
+                <!-- interviste portale -->
+                <page
+                    name="interviste_portale"
+                    string="Interviste Portale"
+                    attrs="{'invisible':['|',('state', '!=', 'sale'),('has_portale_categ','=',False)]}"
+                >
+                    <field name="interviste_portale_ids" string="Interviste Portale">
+                        <tree string="Interviste Portale" editable="bottom">
+                            <field name="regione_portale"/>
+                            <field name="servizi_portale"/>
+                            <field name="link_da_inserire_portale"/>
+                            
+                            <!-- operatore e data -->
+                            <field name="write_uid"/>
+                            <field name="write_date"/>
+                        </tree>
+                    </field>
+                </page>
+                
+                
+                <!-- interviste sito -->
+                <page
+                    name="interviste_sito"
+                    string="Interviste Sito"
+                    attrs="{'invisible':['|',('state', '!=', 'sale'),('has_sito_categ','=',False)]}"
+                >
+                    <field name="interviste_sito_ids" string="Interviste Sito">
+                        <tree string="Interviste Sito" editable="bottom">
+                            <field name="dominio_cliente_ftp"/>
+                            <field name="dominio_acquistato"/>
+                            <field name="dominio_stock"/>
+                            
+                            <!-- operatore e data -->
+                            <field name="write_uid"/>
+                            <field name="write_date"/>
+                        </tree>
+                    </field>
+                    
+                    <field name="interviste_sito_ids_2" string="Interviste Sito">
+                        <tree string="Interviste Sito" editable="bottom">
+                            <field name="descrizione_attivita"/>
+                            <field name="grafica_e_contenuti"/>
+                            <field name="nomi_mail_scelte"/>
+                            <field name="descrizione_attivita"/>
+                            <field name="tipologia_sito"/>
+                            
+                            <!-- operatore e data -->
+                            <field name="write_uid"/>
+                            <field name="write_date"/>
+                        </tree>
+                    </field>
+                    
+                    <field name="interviste_sito_ids_3" string="Interviste Sito">
+                        <tree string="Interviste Sito" editable="bottom">
+                            <field name="numero_plugin_whatsapp"/>
+                            <field name="numero_plugin_facebook"/>
+                            <field name="credenziali_plugin_messenger"/>
+                            
+                            <!-- operatore e data -->
+                            <field name="write_uid"/>
+                            <field name="write_date"/>
+                        </tree>
+                    </field>
+                    
+                    <field name="interviste_sito_ids_4" string="Interviste Sito">
+                        <tree string="Interviste Sito" editable="bottom">
+                            <field name="hosting_user"/>
+                            <field name="hosting_pw"/>
+                            <field name="hosting_url"/>
+                            <field name="ftp_host"/>
+                            <field name="ftp_user"/>
+                            <field name="ftp_pw"/>
+                            <field name="cms_cliente_url"/>
+                            <field name="cms_cliente_user"/>
+                            <field name="cms_cliente_pw"/>
+                            <field name="database_nome"/>
+                            <field name="database_user"/>
+                            <field name="database_pw"/>
+                            <field name="database_host"/>
+                            <field name="database_url"/>
+                            
+                            <!-- operatore e data -->
+                            <field name="write_uid"/>
+                            <field name="write_date"/>
+                        </tree>
+                    </field>
+                    
+                    <field name="interviste_sito_ids_5" string="Interviste Sito">
+                        <tree string="Interviste Sito" editable="bottom">
+                            <field name="hosting"/>
+                            <field name="elenco_server"/>
+                            <field name="account_server_user"/>
+                            <field name="account_server_pw"/>
+                            <field name="account_db_username"/>
+                            <field name="account_db_host"/>
+                            <field name="cms_url"/>
+                            <field name="cms_user"/>
+                            <field name="cms_pw"/>
+                            
+                            <!-- operatore e data -->
+                            <field name="write_uid"/>
+                            <field name="write_date"/>
+                        </tree>
+                    </field>
+                    
+                    <field name="interviste_sito_ids_6" string="Interviste Sito">
+                        <tree string="Interviste Sito" editable="bottom">
+                            <field name="user_console"/>
+                            <field name="pw_console"/>
+                            <field name="user_analytics"/>
+                            <field name="pw_analytics"/>
+                            
+                            <!-- operatore e data -->
+                            <field name="write_uid"/>
+                            <field name="write_date"/>
+                        </tree>
+                    </field>
+                    
+                    <field name="interviste_sito_ids_7" string="Interviste Sito">
+                        <tree string="Interviste Sito" editable="bottom">
+                            <field name="user_email"/>
+                            
+                            <!-- operatore e data -->
+                            <field name="write_uid"/>
+                            <field name="write_date"/>
+                        </tree>
+                    </field>
+                </page>
+                
+                <!-- interviste seo -->
+                <page
+                    name="interviste_seo"
+                    string="Interviste Seo"
+                    attrs="{'invisible':['|',('state', '!=', 'sale'),('has_seo_categ','=',False)]}"
+                >
+                    <field name="interviste_seo_ids" string="Interviste Seo">
+                        <tree string="Interviste Seo" editable="bottom">
+                            <field name="keywords_suggerite_cliente"/>
+                            <field name="keywords_utilizzate"/>
+                            <field name="keywords_rinnovo"/>
+                            
+                            <!-- operatore e data -->
+                            <field name="write_uid"/>
+                            <field name="write_date"/>
+                        </tree>
+                    </field>
+                </page>
+                
+                <!-- interviste ecommerce -->
+                <page
+                    name="interviste_ecommerce"
+                    string="Interviste ecommerce"
+                    attrs="{'invisible':['|',('state', '!=', 'sale'),('has_ecommerce_categ','=',False)]}"
+                >
+                    <field name="interviste_ecommerce_ids" string="Interviste ecommerce">
+                        <tree string="Interviste ecommerce" editable="bottom">
+                            <field name="dominio_cliente_ftp"/>
+                            <field name="dominio_acquistato"/>
+                            <field name="dominio_stock"/>
+                            
+                            <!-- operatore e data -->
+                            <field name="write_uid"/>
+                            <field name="write_date"/>
+                        </tree>
+                    </field>
+                    
+                    <field name="interviste_ecommerce_ids_2" string="Interviste ecommerce">
+                        <tree string="Interviste ecommerce" editable="bottom">
+                            <field name="descrizione_attivita"/>
+                            <field name="grafica_e_contenuti"/>
+                            <field name="nomi_mail_scelte"/>
+                            <field name="descrizione_attivita"/>
+                            <field name="tipologia_sito"/>
+                            
+                            <!-- operatore e data -->
+                            <field name="write_uid"/>
+                            <field name="write_date"/>
+                        </tree>
+                    </field>
+                    
+                    <field name="interviste_ecommerce_ids_3" string="Interviste ecommerce">
+                        <tree string="Interviste ecommerce" editable="bottom">
+                            <field name="numero_plugin_whatsapp"/>
+                            <field name="numero_plugin_facebook"/>
+                            <field name="credenziali_plugin_messenger"/>
+                            
+                            <!-- operatore e data -->
+                            <field name="write_uid"/>
+                            <field name="write_date"/>
+                        </tree>
+                    </field>
+                    
+                    <field name="interviste_ecommerce_ids_4" string="Interviste ecommerce">
+                        <tree string="Interviste ecommerce" editable="bottom">
+                            <field name="hosting_user"/>
+                            <field name="hosting_pw"/>
+                            <field name="hosting_url"/>
+                            <field name="ftp_host"/>
+                            <field name="ftp_user"/>
+                            <field name="ftp_pw"/>
+                            <field name="cms_cliente_url"/>
+                            <field name="cms_cliente_user"/>
+                            <field name="cms_cliente_pw"/>
+                            <field name="database_nome"/>
+                            <field name="database_user"/>
+                            <field name="database_pw"/>
+                            <field name="database_host"/>
+                            <field name="database_url"/>
+                            
+                            <!-- operatore e data -->
+                            <field name="write_uid"/>
+                            <field name="write_date"/>
+                        </tree>
+                    </field>
+                    
+                    <field name="interviste_ecommerce_ids_5" string="Interviste ecommerce">
+                        <tree string="Interviste ecommerce" editable="bottom">
+                            <field name="hosting"/>
+                            <field name="elenco_server"/>
+                            <field name="account_server_user"/>
+                            <field name="account_server_pw"/>
+                            <field name="account_db_username"/>
+                            <field name="account_db_host"/>
+                            <field name="cms_url"/>
+                            <field name="cms_user"/>
+                            <field name="cms_pw"/>
+                            
+                            <!-- operatore e data -->
+                            <field name="write_uid"/>
+                            <field name="write_date"/>
+                        </tree>
+                    </field>
+                    
+                    <field name="interviste_ecommerce_ids_6" string="Interviste ecommerce">
+                        <tree string="Interviste ecommerce" editable="bottom">
+                            <field name="user_console"/>
+                            <field name="pw_console"/>
+                            <field name="user_analytics"/>
+                            <field name="pw_analytics"/>
+                            
+                            <!-- operatore e data -->
+                            <field name="write_uid"/>
+                            <field name="write_date"/>
+                        </tree>
+                    </field>
+                    
+                    <field name="interviste_ecommerce_ids_7" string="Interviste ecommerce">
+                        <tree string="Interviste ecommerce" editable="bottom">
+                            <field name="user_email"/>
+                            
+                            <!-- operatore e data -->
+                            <field name="write_uid"/>
+                            <field name="write_date"/>
+                        </tree>
+                    </field>
+                </page>
+                
+                <!-- interviste landing -->
+                <page
+                    name="interviste_landing"
+                    string="Interviste landing"
+                    attrs="{'invisible':['|',('state', '!=', 'sale'),('has_landing_categ','=',False)]}"
+                >
+                    <field name="interviste_landing_ids" string="Interviste landing">
+                        <tree string="Interviste landing" editable="bottom">
+                            <field name="dominio_cliente_ftp"/>
+                            <field name="dominio_acquistato"/>
+                            <field name="dominio_stock"/>
+                            
+                            <!-- operatore e data -->
+                            <field name="write_uid"/>
+                            <field name="write_date"/>
+                        </tree>
+                    </field>
+                    
+                    <field name="interviste_landing_ids_2" string="Interviste landing">
+                        <tree string="Interviste landing" editable="bottom">
+                            <field name="descrizione_attivita"/>
+                            <field name="grafica_e_contenuti"/>
+                            <field name="nomi_mail_scelte"/>
+                            <field name="descrizione_attivita"/>
+                            <field name="tipologia_sito"/>
+                            
+                            <!-- operatore e data -->
+                            <field name="write_uid"/>
+                            <field name="write_date"/>
+                        </tree>
+                    </field>
+                    
+                    <field name="interviste_landing_ids_3" string="Interviste landing">
+                        <tree string="Interviste landing" editable="bottom">
+                            <field name="numero_plugin_whatsapp"/>
+                            <field name="numero_plugin_facebook"/>
+                            <field name="credenziali_plugin_messenger"/>
+                            
+                            <!-- operatore e data -->
+                            <field name="write_uid"/>
+                            <field name="write_date"/>
+                        </tree>
+                    </field>
+                    
+                    <field name="interviste_landing_ids_4" string="Interviste landing">
+                        <tree string="Interviste landing" editable="bottom">
+                            <field name="hosting_user"/>
+                            <field name="hosting_pw"/>
+                            <field name="hosting_url"/>
+                            <field name="ftp_host"/>
+                            <field name="ftp_user"/>
+                            <field name="ftp_pw"/>
+                            <field name="cms_cliente_url"/>
+                            <field name="cms_cliente_user"/>
+                            <field name="cms_cliente_pw"/>
+                            <field name="database_nome"/>
+                            <field name="database_user"/>
+                            <field name="database_pw"/>
+                            <field name="database_host"/>
+                            <field name="database_url"/>
+                            
+                            <!-- operatore e data -->
+                            <field name="write_uid"/>
+                            <field name="write_date"/>
+                        </tree>
+                    </field>
+                    
+                    <field name="interviste_landing_ids_5" string="Interviste landing">
+                        <tree string="Interviste landing" editable="bottom">
+                            <field name="hosting"/>
+                            <field name="elenco_server"/>
+                            <field name="account_server_user"/>
+                            <field name="account_server_pw"/>
+                            <field name="account_db_username"/>
+                            <field name="account_db_host"/>
+                            <field name="cms_url"/>
+                            <field name="cms_user"/>
+                            <field name="cms_pw"/>
+                            
+                            <!-- operatore e data -->
+                            <field name="write_uid"/>
+                            <field name="write_date"/>
+                        </tree>
+                    </field>
+                    
+                    <field name="interviste_landing_ids_6" string="Interviste landing">
+                        <tree string="Interviste landing" editable="bottom">
+                            <field name="user_console"/>
+                            <field name="pw_console"/>
+                            <field name="user_analytics"/>
+                            <field name="pw_analytics"/>
+                            
+                            <!-- operatore e data -->
+                            <field name="write_uid"/>
+                            <field name="write_date"/>
+                        </tree>
+                    </field>
+                    
+                    <field name="interviste_landing_ids_7" string="Interviste landing">
+                        <tree string="Interviste landing" editable="bottom">
+                            <field name="user_email"/>
+                            
+                            <!-- operatore e data -->
+                            <field name="write_uid"/>
+                            <field name="write_date"/>
+                        </tree>
+                    </field>
+                </page>
+                
+                <!-- interviste virtual tour -->
+                <page
+                    name="interviste_virtual_tour"
+                    string="Interviste Virtual Tour"
+                    attrs="{'invisible':['|',('state', '!=', 'sale'),('has_virtual_tour_categ','=',False)]}"
+                >
+                    <field name="interviste_virtual_tour_ids" string="Interviste Virtual Tour">
+                        <tree string="Interviste Virtual Tour" editable="bottom">
+                            <field name="url_inserimento_virtual"/>
+                            <field name="tipo_prodotto_inserimento_virtual"/>
+                            
+                            <!-- operatore e data -->
+                            <field name="write_uid"/>
+                            <field name="write_date"/>
+                        </tree>
+                    </field>
+                </page>
+                
+                <!-- interviste instagram -->
+                <page
+                    name="interviste_instagram"
+                    string="Interviste Instagram"
+                    attrs="{'invisible':['|',('state', '!=', 'sale'),('has_instagram_categ','=',False)]}"
+                >
+                    <field name="interviste_instagram_ids" string="Interviste Instagram">
+                        <tree string="Interviste Instagram" editable="bottom">
+                            <field name="url_pagina_instagram"/>
+                            <field name="nome_pagina_instagram"/>
+                            <field name="user_instagram"/>
+                            <field name="password_instagram"/>
+                            
+                            <!-- operatore e data -->
+                            <field name="write_uid"/>
+                            <field name="write_date"/>
+                        </tree>
+                    </field>
+                </page>
+                
+                <!-- intervista facebook -->
+                <page
+                    name="interviste_facebook"
+                    string="Interviste Facebook"
+                    attrs="{'invisible':['|',('state', '!=', 'sale'),('has_facebook_categ','=',False)]}"
+                >
+                    <field name="interviste_facebook_ids" string="Interviste Facebook">
+                        <tree string="Interviste Facebook" editable="bottom">
+                            <field name="url_pagina_facebook"/>
+                            <field name="nome_pagina_facebook"/>
+                            <field name="informazioni_grafiche"/>
+                            <field name="indicazione_contenuti"/>
+                            <field name="raggio_sponsorizzate"/>
+                            <field name="target"/>
+                            
+                            <!-- operatore e data -->
+                            <field name="write_uid"/>
+                            <field name="write_date"/>
+                        </tree>
+                    </field>
+                    <field name="interviste_facebook_ids_2" string="Interviste Facebook">
+                        <tree string="Interviste Facebook" editable="bottom">
+                            <field name="account_bm_facebook"/>
+                            <field name="user_facebook"/>
+                            <field name="pw_facebook"/>
+                            
+                            <!-- operatore e data -->
+                            <field name="write_uid"/>
+                            <field name="write_date"/>
+                        </tree>
+                    </field>
                 </page>
             </notebook>
         </field>

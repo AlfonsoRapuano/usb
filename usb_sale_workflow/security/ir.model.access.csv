@@ -1,2 +1,14 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_usb_sale_workflow_usb_sale_workflow,usb_sale_workflow.usb_sale_workflow,model_usb_sale_workflow_usb_sale_workflow,base.group_user,1,1,1,1
+access_usb_link_type,access_usb_link_type,model_usb_link_type,,1,1,1,1
+access_intervista_gmb,access_intervista_gmb,model_intervista_gmb,,1,1,1,1
+access_intervista_ads,access_intervista_ads,model_intervista_ads,,1,1,1,1
+access_intervista_portale,access_intervista_portale,model_intervista_portale,,1,1,1,1
+access_intervista_sito,access_intervista_sito,model_intervista_sito,,1,1,1,1
+access_intervista_seo,access_intervista_seo,model_intervista_seo,,1,1,1,1
+access_intervista_ecommerce,access_intervista_ecommerce,model_intervista_ecommerce,,1,1,1,1
+access_intervista_landing,access_intervista_landing,model_intervista_landing,,1,1,1,1
+access_intervista_virtual_tour,access_intervista_virtual_tour,model_intervista_virtual_tour,,1,1,1,1
+access_intervista_instagram,access_intervista_instagram,model_intervista_instagram,,1,1,1,1
+access_intervista_facebook,access_intervista_facebook,model_intervista_facebook,,1,1,1,1
+access_usb_sale_macro_group,access_usb_sale_macro_group,model_usb_sale_macro_group,,1,1,1,1
+access_usb_sale_group,access_usb_sale_group,model_usb_sale_group,,1,1,1,1
