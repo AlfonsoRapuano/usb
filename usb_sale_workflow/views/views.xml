@@ -79,6 +79,7 @@
                                 <field name="link_instagram"/>
                                 <field name="link_virtual_tour"/>
                                 <field name="link_portale_regionale"/>
+                                <field name="project_id" domain="[('sale_order_id', '=', parent.id)]" />
                             
                                 <!-- operatore e data -->
                                 <field name="write_uid"/>
@@ -92,6 +93,7 @@
                                 <field name="link_landing_page"/>
                                 <field name="dominio_proprieta_cliente_landing_page"/>
                                 <field name="data_acquisto_dominio_landing_page"/>
+                                <field name="project_id" domain="[('sale_order_id', '=', parent.id)]" />
                             
                                 <!-- operatore e data -->
                                 <field name="write_uid"/>
@@ -105,6 +107,7 @@
                                 <field name="link_sito"/>
                                 <field name="dominio_proprieta_cliente_sito"/>
                                 <field name="data_acquisto_dominio_sito"/>
+                                <field name="project_id" domain="[('sale_order_id', '=', parent.id)]" />
                             
                                 <!-- operatore e data -->
                                 <field name="write_uid"/>
@@ -118,6 +121,7 @@
                                 <field name="link_ecommerce"/>
                                 <field name="dominio_proprieta_cliente_ecommerce"/>
                                 <field name="data_acquisto_dominio_ecommerce"/>
+                                <field name="project_id" domain="[('sale_order_id', '=', parent.id)]" />
                             
                                 <!-- operatore e data -->
                                 <field name="write_uid"/>
@@ -130,6 +134,7 @@
                             <tree string="Tipologie di Link" editable="bottom">
                                 <field name="link_article_marketing_seo"/>
                                 <field name="provider_article"/>
+                                <field name="project_id" domain="[('sale_order_id', '=', parent.id)]" />
                             
                                 <!-- operatore e data -->
                                 <field name="write_uid"/>

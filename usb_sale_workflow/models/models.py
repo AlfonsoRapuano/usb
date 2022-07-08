@@ -279,6 +279,9 @@ class UsbLinkType(models.Model):
     link_article_marketing_seo = fields.Char("LINK ARTICLE MARKETING SEO")
     provider_article = fields.Char("PROVIDER ARTICLE")
     
+    project_id = fields.Many2one('project.project', string='Progetto')
+
+    
     
 class UsbSaleMacroGroup(models.Model):
     _name = "usb.sale.macro.group"
@@ -568,10 +571,6 @@ class SaleOrder(models.Model):
         
         for rec in self:
             categ_ids_order = [line.product_id.categ_id.id for line in rec.order_line]
-            
-            _logger.info(categ_ids_order)
-            _logger.info(ads_categ_id)
-            
             rec.has_ecommerce_categ = ecommerce_categ_id in categ_ids_order
             rec.has_ads_categ = ads_categ_id in categ_ids_order
             rec.has_facebook_categ = facebook_categ_id in categ_ids_order
