@@ -8,47 +8,123 @@
         <field name="priority">2</field>
         <field name="arch" type="xml">
             <xpath expr="//page[@name='internal_notes']" position="after">
-                <page
-                    name="usb_custom_fields"
-                    string="USB Custom Fields"
-                >
-                    <!-- informazioni anagrafiche -->
-                    <group name="informazioni_anagrafiche" string="Informazioni Anagrafiche" attrs="{'invisible': [('is_company','=',True)]}" >
-                        <field name="gender" />
-                        <field name="nato_il" />
-                        <field name="luogo_di_nascita" />
-                        <field name="provinca_di_nascita" />
-                        <field name="doc_type" />
-                        <field name="doc_num" />
-                        <field name="doc_emesso_il" />
-                        <field name="doc_scadenza" />
-                        <field name="luogo_emissione_documento" />
-                    </group>
-                    
-                    <!-- informazioni tecniche -->
-                    <group name="informazioni_tecniche" string="Informazioni Tecniche" attrs="{'invisible': [('is_company','=',False)]}" >
-                        <field name="associazione" />
-                        <field name="des_categoria_merceologica" />
-                        <field name="des_gruppo_anagrafica" />
-                        <field name="des_agente_anagrafica" />
-                        <field name="des_attivita" />
-                        <field name="fatturazione_country_id" />
-                    </group>
-                    
+                <page name="usb_custom_fields"  string="USB Custom Fields" attrs="{'invisible': [('is_company','=',False)]}">
+
                     <!-- informazioni varie -->
                     <group name="informazioni_varie" string="Varie" attrs="{'invisible': [('is_company','=',False)]}" >
                         <field name="id_cliente_USB" />
-                        <field name="vies" />
-                        <field name="split_payment" />
-                        <field name="tipo_esenzione" />
-                        <field name="gdpr1" />
-                        <field name="gdpr2" />
                         <field name="anag_da_escludere" />
                         <field name="data_ins_canc_newsletter" />
+                        <field name="cig" />
+                        <field name="cup" />
+                    </group>
+                </page>
+                
+                <page name="indirizzi_sede" string="Indirizzi Sede">
+                    
+                    <!-- INDIRIZZI SEDE -->
+                    <group name="indirizzi_sede" string="Indirizzi Sede">
+                        <field name="indirizzo_sede_legale" />
+                        <field name="cap_sede_legale" />
+                        <field name="citta_sede_legale" />
+                        <field name="provincia_sede_legale" />
+                        <field name="regione_sede_legale" />
+                        <field name="indirizzo_sede_operativa" />
+                        <field name="cap_sede_operativa" />
+                        <field name="citta_sede_operativa" />
+                        <field name="provincia_sede_operativa" />
+                        <field name="regione_sede_operativa" />
+                        
+                    </group>
+                </page>
+                
+                
+                <page name="rappresentati_legali" string="Rappresentati Legali" attrs="{'invisible': [('is_company','=',False)]}">
+                    
+                    <!-- Rappresentati Legali -->
+                    <group name="rappresentati_legali1" string="Rappresentati Legali 1">
+                        <field name="referente_cognome1" />
+                        <field name="referente_nome1" />
+                        <field name="data_nascita1" />
+                        <field name="luogo_nascita1" />
+                        <field name="provincia1" />
+                        <field name="codice_fiscale1" />
+                        <field name="sesso1" />
+                        <field name="tipo_documento1" />
+                        <field name="numero_documento1" />
+                        <field name="data_emissione_documento1" />
+                        <field name="data_scadenza_documento1" />
+                        <field name="luogo_emissione_documento1" />
+                                               
+                    </group>
+                    
+                    <group name="rappresentati_legali2" string="Rappresentati Legali 2">
+                        <field name="referente_cognome2" />
+                        <field name="referente_nome2" />
+                        <field name="data_nascita2" />
+                        <field name="luogo_nascita2" />
+                        <field name="provincia2" />
+                        <field name="codice_fiscale2" />
+                        <field name="sesso2" />
+                        <field name="tipo_documento2" />
+                        <field name="numero_documento2" />
+                        <field name="data_emissione_documento2" />
+                        <field name="data_scadenza_documento2" />
+                        <field name="luogo_emissione_documento2" />
+                                               
+                    </group>
+                </page>
+                
+                <page name="delegato" string="Delegato" attrs="{'invisible': [('is_company','=',False)]}">
+                    
+                    <!-- delegato -->
+                    <group name="delegato" string="Delegato">
+                        <field name="referente_tecnico_o_delegato_cognome" />
+                        <field name="referente_tecnico_o_delegato_nome" />
+                        <field name="referente_tecnico_o_delegato_cf" />
+                        <field name="referente_tecnico_o_delegato_mobile1" />
+                                               
                     </group>
                 </page>
             </xpath>
+            
+            <field name="vat" position="after">
+                 <field name="tipologia_anagrafica" />
+                 <field name="nazionalita_anagrafica_fatturazione" />
+                 <field name="fatturazione_country_id" />
+                 <!--<field name="flag_dati_gdpr" />-->
+            </field>
+            
+            <field name="phone" position="after">
+                 <field name="telefono_fisso_2" widget="phone" />
+            </field>
+            
+            <field name="mobile" position="after">
+                  <field name="mobile_2" widget="phone"/>
+                  <field name="mobile_3" widget="phone"/>
+            </field>
+            
+            <field name="email" position="after">
+                  <field name="email_2" widget="email"/>
+                  <field name="email_3" widget="email"/>
+            </field>
+            
+            <field name="vat" position="before">
+                    <field name="tipo_esenzione" />
+                    <field name="vies" />
+                    <field name="split_payment" />
+                    <field name="associazione" />
+            </field>
+            
+            <field name="category_id" position="after">
+                     <field name="des_gruppo_anagrafica" />
+                     <field name="des_agente_anagrafica" />
+                    
+            </field>
+            
         </field>
     </record>
+      
+      
   </data>
 </odoo>
