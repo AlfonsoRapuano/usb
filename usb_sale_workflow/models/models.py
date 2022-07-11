@@ -354,16 +354,19 @@ class SaleOrder(models.Model):
                                                         ('link_instagram', '!=', False),('link_virtual_tour', '!=', False),('link_portale_regionale', '!=', False),])
     usb_link_type_ids_2 = fields.One2many(
         'usb.link.type', 'sale_id', string='Tipologia Link',
-        copy=False, readonly=False, domain=lambda self: [('link_landing_page', '!=', False)])
+        copy=False, readonly=False, domain=lambda self: ['|','|',('link_landing_page', '!=', False), ('dominio_proprieta_cliente_landing_page', '!=', False), \
+                                                        ('data_acquisto_dominio_landing_page', '!=', False),])
     usb_link_type_ids_3 = fields.One2many(
         'usb.link.type', 'sale_id', string='Tipologia Link',
-        copy=False, readonly=False, domain=lambda self: [('link_sito', '!=', False)])
+        copy=False, readonly=False, domain=lambda self: ['|','|',('link_sito', '!=', False), ('dominio_proprieta_cliente_sito', '!=', False), \
+                                                        ('data_acquisto_dominio_sito', '!=', False),])
     usb_link_type_ids_4 = fields.One2many(
         'usb.link.type', 'sale_id', string='Tipologia Link',
-        copy=False, readonly=False, domain=lambda self: [('link_ecommerce', '!=', False)])
+        copy=False, readonly=False, domain=lambda self: ['|','|',('link_ecommerce', '!=', False), ('dominio_proprieta_cliente_ecommerce', '!=', False), \
+                                                        ('data_acquisto_dominio_ecommerce', '!=', False),])
     usb_link_type_ids_5 = fields.One2many(
         'usb.link.type', 'sale_id', string='Tipologia Link',
-        copy=False, readonly=False, domain=lambda self: [('link_article_marketing_seo', '!=', False)])
+        copy=False, readonly=False, domain=lambda self: ['|',('link_article_marketing_seo', '!=', False), ('provider_article', '!=', False)])
     
     
     # interviste gmb
