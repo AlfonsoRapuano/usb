@@ -105,7 +105,7 @@ class SaleOrder(models.Model):
 class SaleOrderLine(models.Model):
     _inherit = "sale.order.line"
     
-    
+
     
     def _timesheet_create_project(self,project_num=1):
         """ Generate project for the given so line, and link it.
@@ -169,6 +169,7 @@ class SaleOrderLine(models.Model):
 
         def _can_create_project(sol):
             
+            '''
             if not sol.project_id:
                 if sol.product_id.project_template_id:
                     #controllo la quantità
@@ -177,7 +178,7 @@ class SaleOrderLine(models.Model):
                 elif sol.order_id.id not in map_so_project:
                     return True
             return False
-            
+            '''
             _logger.info("siamo in can_create_project")
             return True
 
@@ -205,13 +206,12 @@ class SaleOrderLine(models.Model):
         # project_only, task_in_project: create a new project, based or not on a template (1 per SO). May be create a task too.
         # if 'task_in_project' and project_id configured on SO, use that one instead
         for so_line in so_line_new_project:
-            _logger.info(so_line)
             project = _determine_project(so_line)
             if not project and _can_create_project(so_line):
                 #ciclo la quantità di ogni riga ordine e creo per ogni un progetto
                 for line in range(int(so_line.product_uom_qty)):
                     project = so_line._timesheet_create_project(line+1) 
-
+                
                 # https://stackoverflow.com/questions/9377402/insert-into-many2many-odoo-former-openerp
                 #so_line.order_id.write({'project_ids': [(4, project.id)] })
                 
