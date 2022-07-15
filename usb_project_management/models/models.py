@@ -2,6 +2,7 @@
 from odoo import fields, models, api, _
 import logging
 _logger = logging.getLogger("====== USB Project Management ======")
+from collections import defaultdict
 
 
 class ProjectProjectInherit(models.Model):
@@ -117,7 +118,8 @@ class SaleOrderLine(models.Model):
         
         if self.product_id.project_template_id:
             # X usb ci dirà con quale parola dovremmo sostiurlo
-            values['name'] = "%s  - %s - X0%s" % (values['name'], self.product_id.name, str(project_num))
+            product_pack_name = "- " + self.pack_parent_line_id.product_id.name + " -" if self.pack_parent_line_id else "-"
+            values['name'] = "%s %s %s - X0%s" % (values['name'],product_pack_name,self.product_id.name, str(project_num))
             project = self.product_id.project_template_id.copy(values)
             project.tasks.write({
                 'sale_line_id': self.id,
@@ -161,26 +163,11 @@ class SaleOrderLine(models.Model):
             map_so_project = {sol.order_id.id: sol.project_id for sol in so_lines_with_project}
             so_lines_with_project_templates = self.search([('order_id', 'in', order_ids), ('project_id', '!=', False), ('product_id.service_tracking', 'in', ['project_only', 'task_in_project']), ('product_id.project_template_id', '!=', False)])
             map_so_project_templates = {(sol.order_id.id, sol.product_id.project_template_id.id): sol.project_id for sol in so_lines_with_project_templates}
-
+            map_same_product_line = {self.filtered(lambda sol: sol.is_service and sol.product_id.service_tracking in ['project_only', 'task_in_project'])}
         # search the global project of current SO lines, in which create their task
         map_sol_project = {}
         if so_line_task_global_project:
             map_sol_project = {sol.id: sol.product_id.with_company(sol.company_id).project_id for sol in so_line_task_global_project}
-
-        def _can_create_project(sol):
-            
-            '''
-            if not sol.project_id:
-                if sol.product_id.project_template_id:
-                    #controllo la quantità
-                    if sol.product_uom_qty:
-                        return (sol.order_id.id, sol.product_id.project_template_id.id) not in map_so_project_templates
-                elif sol.order_id.id not in map_so_project:
-                    return True
-            return False
-            '''
-            _logger.info("siamo in can_create_project")
-            return True
 
         def _determine_project(so_line):
             """Determine the project for this sale order line.
@@ -202,39 +189,49 @@ class SaleOrderLine(models.Model):
             if not so_line.task_id:
                 if map_sol_project.get(so_line.id):
                     so_line._timesheet_create_task(project=map_sol_project[so_line.id])
-
-        # project_only, task_in_project: create a new project, based or not on a template (1 per SO). May be create a task too.
-        # if 'task_in_project' and project_id configured on SO, use that one instead
-        for so_line in so_line_new_project:
+                    
+        # il parametro line è il numero del progetto da creare: es. X01 , X02. Di default è 1, ma cambia mano mano che ciclo sulle righe ordine
+        def create_project_for_so_line(so_line, line = 1):   
             project = _determine_project(so_line)
-            if not project and _can_create_project(so_line):
+            if not project:
                 #ciclo la quantità di ogni riga ordine e creo per ogni un progetto
-                for line in range(int(so_line.product_uom_qty)):
-                    project = so_line._timesheet_create_project(line+1) 
+                for line in range(line, int(line + so_line.product_uom_qty)):
+                    project = so_line._timesheet_create_project(line) 
                 
-                # https://stackoverflow.com/questions/9377402/insert-into-many2many-odoo-former-openerp
-                #so_line.order_id.write({'project_ids': [(4, project.id)] })
-                
-                #_logger.info(so_line.order_id.project_ids)
+                return line
+   
+        # qui isolo le righe che fanno parte di un pack e le processo separatamente
+        so_line_with_pack = [so_line for so_line in so_line_new_project if so_line.pack_parent_line_id]
 
-                
-                if so_line.product_id.project_template_id:
-                    map_so_project_templates[(so_line.order_id.id, so_line.product_id.project_template_id.id)] = project
-                else:
-                    map_so_project[so_line.order_id.id] = project
-            elif not project:
-                # Attach subsequent SO lines to the created project
-                so_line.project_id = (
-                    map_so_project_templates.get((so_line.order_id.id, so_line.product_id.project_template_id.id))
-                    or map_so_project.get(so_line.order_id.id)
-                )
-            if so_line.product_id.service_tracking == 'task_in_project':
-                if not project:
-                    if so_line.product_id.project_template_id:
-                        project = map_so_project_templates[(so_line.order_id.id, so_line.product_id.project_template_id.id)]
-                    else:
-                        project = map_so_project[so_line.order_id.id]
-                if not so_line.task_id:
-                    so_line._timesheet_create_task(project=project)
+        # qui isolo le righe che NON fanno parte di un pack e le processo separatamente
+        so_line_without_pack = [so_line for so_line in so_line_new_project if not so_line.pack_parent_line_id]
+        
 
+        # How to group a list of tuples/objects by similar index/attribute in python?
+        # https://stackoverflow.com/questions/6602172/how-to-group-a-list-of-tuples-objects-by-similar-index-attribute-in-python
+        # raggruppo le righe ordine di vendita senza pack insieme per prodotto / servizio
+        groups = defaultdict(list)
 
+        for so_line in so_line_without_pack:
+            groups[so_line.product_id].append(so_line)
+
+        grouped_so_line_without_pack = list(groups.values())
+        
+        # creo i progetti per ogni riga ordine che fa parte di un pack
+        for so_line in so_line_with_pack:
+            create_project_for_so_line(so_line)
+            
+        # scorro i raggruppamenti di righe prodotto / servizio
+        # per ogni raggruppamento riparto dal numero 1 (X01)
+        # ovviamente incrementando ogni riga che passa
+        for group in grouped_so_line_without_pack:
+            # parto da 1 per ogni grouppo
+            line = 1
+            for so_line in group:
+                if not so_line.project_id:
+                    # il metodo create_project_for_so_line mi ritorna un intero: il numero al quale sono arrivato:
+                    # se la riga precedente aveva 5 unità da processare e ero arrivato a 3, line mi ritorna 8 che 
+                    # è il numero dell'ultimo progetto (X08)
+                    line = create_project_for_so_line(so_line, line)
+                    # il prossimo sarà il 9 (X09), quindi aumento di 1
+                    line += 1
