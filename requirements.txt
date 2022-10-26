@@ -5,6 +5,6 @@ xlsxwriter
 xlrd
 codicefiscale
 pyxb
-
+black
 
 

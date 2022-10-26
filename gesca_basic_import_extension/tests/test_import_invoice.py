@@ -4,15 +4,15 @@ from odoo.addons.account.tests.common import AccountTestInvoicingCommon
 
 from os import path
 from base64 import b64encode
-
+import datetime
 
 import logging
+
 _logger = logging.getLogger("===== Test Import Invoice Wizard =====")
 
 
-@tagged('-at_install', 'post_install')
+@tagged("-at_install", "post_install")
 class TestImportInvoice(AccountTestInvoicingCommon):
-    
     @classmethod
     def _data_file(self, filename, encoding=None):
         mode = "rt" if encoding else "rb"
@@ -25,7 +25,7 @@ class TestImportInvoice(AccountTestInvoicingCommon):
     @classmethod
     def setUpClass(cls, chart_template_ref=None):
         super(TestImportInvoice, cls).setUpClass()
-        
+
         cls.invoice_to_update = cls.env["account.move"].create(
             {
                 "move_type": "out_invoice",
@@ -45,30 +45,73 @@ class TestImportInvoice(AccountTestInvoicingCommon):
                             "product_uom_id": cls.product_a.uom_id,
                             "quantity": 5,
                             "price_unit": cls.product_a.lst_price,
-                            "tax_ids": cls.product_a.taxes_id
+                            "tax_ids": cls.product_a.taxes_id,
                         },
                     ),
                 ],
             }
         )
 
-        
-        file = cls._data_file("import_inv_excel.xls")
-        
-        cls.import_inv_wizard = cls.env['import.inv.wizard'].create({
-            "import_type": "excel",
-            "product_by": "name",
-            "invoice_type": "inv",
-            "account_option": "default",
-            "is_validate": False,
-            "inv_no_type": "auto",
-            "import_mode": "update",
-            "file": file
-        })
-        
+    def test_invoice_state(self):
 
-    def test_import_invoice(self):
+        file = self._data_file("confirm_invoice.xls")
+
+        self.import_inv_wizard = self.env["import.inv.wizard"].create(
+            {
+                "import_type": "excel",
+                "product_by": "name",
+                "invoice_type": "inv",
+                "account_option": "default",
+                "is_validate": False,
+                "inv_no_type": "auto",
+                "import_mode": "update",
+                "file": file,
+            }
+        )
+
         # testiamo la data e lo stato
-        self.import_inv_wizard.import_inv_apply()        
+        self.import_inv_wizard.import_inv_apply()
         self.assertEqual(self.invoice_to_update.state, "posted")
-    
+
+        file = self._data_file("cancel_invoice.xls")
+
+        self.import_inv_wizard = self.env["import.inv.wizard"].create(
+            {
+                "import_type": "excel",
+                "product_by": "name",
+                "invoice_type": "inv",
+                "account_option": "default",
+                "is_validate": False,
+                "inv_no_type": "auto",
+                "import_mode": "update",
+                "file": file,
+            }
+        )
+
+        # testiamo la data e lo stato
+        self.import_inv_wizard.import_inv_apply()
+        self.assertEqual(self.invoice_to_update.state, "draft")
+
+    def test_invoice_date(self):
+
+        file = self._data_file("import_invoice_date.xls")
+
+        self.import_inv_wizard = self.env["import.inv.wizard"].create(
+            {
+                "import_type": "excel",
+                "product_by": "name",
+                "invoice_type": "inv",
+                "account_option": "default",
+                "is_validate": False,
+                "inv_no_type": "auto",
+                "import_mode": "update",
+                "file": file,
+            }
+        )
+
+        # testiamo la data e lo stato
+        self.import_inv_wizard.import_inv_apply()
+        self.assertEqual(
+            self.invoice_to_update.invoice_date,
+            datetime.datetime.strptime("2025-02-02", "%Y-%m-%d").date(),
+        )
