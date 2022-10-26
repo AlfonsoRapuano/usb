@@ -4,6 +4,7 @@
 from odoo import fields, api, models, _
 import base64
 import xlrd
+from odoo.exceptions import UserError
 
 import logging
 
@@ -65,6 +66,11 @@ class ImportINVWizardInherit(models.TransientModel):
             invoice_to_update = self.env["account.move"].search(
                 [("name", "=", values[i][0])]
             )
+
+            if not invoice_to_update:
+                raise UserError(
+                    "Attenzione! Nessuna fattura presente con nome: " + values[i][0]
+                )
             for j in range(len(values[i])):
                 if fields[j] != "state":
                     invoice_to_update.write({fields[j]: values[i][j]})
