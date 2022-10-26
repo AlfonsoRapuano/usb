@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+ 
+<!-- Declared the same in every module that may need it -->
+    <record id="gesca_import_inv_wizard" model="ir.ui.view">
+        <field name="name">gesca.import.inv.wizard</field>
+        <field name="model">import.inv.wizard</field>
+        <field name="inherit_id" ref="sh_all_in_one_basic_import.sh_import_inv_wizard" />
+        <field name="arch" type="xml">
+            <field name="inv_no_type" position="after">
+                    <field name="import_mode" widget="radio" />
+            </field>
+        </field>
+    </record>
+</odoo>

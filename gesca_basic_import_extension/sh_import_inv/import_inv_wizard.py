@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # Part of Softhealer Technologies.
 
-from odoo import fields, models, _
+from odoo import fields,api, models, _
 import base64
 import xlrd
 
@@ -32,7 +32,6 @@ class ImportINVWizardInherit(models.TransientModel):
         string="Modailità importazione",
         required=True,
     )
-
     
     # GESCA
     # metodo per chiamare le azioni corrispondenti ai vari stati

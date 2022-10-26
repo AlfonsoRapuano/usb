@@ -20,5 +20,6 @@
     # always loaded
     'data': [
         'views/views.xml',
+        'sh_import_inv/import_inv_wizard.xml'
     ],
 }
