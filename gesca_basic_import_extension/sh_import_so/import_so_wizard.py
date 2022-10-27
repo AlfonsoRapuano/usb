@@ -69,7 +69,7 @@ class ImportSOWizard(models.TransientModel):
                         raise UserError(
                             "Attenzione! Valore errato per il campo: "
                             + fields[j]
-                            + " della fattura "
+                            + " dell'ordine "
                             + values[i][0]
                             + ": "
                             + values[i][j]

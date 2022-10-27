@@ -60,7 +60,7 @@ class ImportPROJWizardInherit(models.TransientModel):
                     raise UserError(
                         "Attenzione! Valore errato per il campo: "
                         + fields[j]
-                        + " della fattura "
+                        + " del progetto "
                         + values[i][0]
                         + ": "
                         + values[i][j]
