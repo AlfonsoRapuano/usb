@@ -8,11 +8,11 @@ from odoo.exceptions import UserError
 
 import logging
 
-_logger = logging.getLogger("===== Gesca Import Sale Order Wizard =====")
+_logger = logging.getLogger("===== Gesca Import Purchase Order Wizard =====")
 
 
-class ImportSOWizard(models.TransientModel):
-    _inherit = "import.so.wizard"
+class ImportPOWizard(models.TransientModel):
+    _inherit = "import.po.wizard"
 
     # GESCA
     # per permettere un'importazione in aggiornamento e non solo in creazione, dobbiamo creare un nuovo flag
@@ -25,26 +25,28 @@ class ImportSOWizard(models.TransientModel):
 
     # GESCA
     # metodo per chiamare le azioni corrispondenti ai vari stati
-    def do_corresponding_state_action(self, so, state):
+    def do_corresponding_state_action(self, po, state):
         # For Excel
         if state == "Confermato":
-            so.action_confirm()
+            po.button_confirm()
         elif state == "Cancellato":
-            so.action_cancel()
+            po.button_cancel()
         elif state == "Bozza":
-            so.action_draft()
+            po.action_draft()
 
     # GESCA
-    # funzione di aggiornamento di ordini di vendita già esistenti
-    def update_sale_orders(self, matrix):
+    # funzione di aggiornamento di ordini di acquisto già esistenti
+    def update_purchase_orders(self, matrix):
 
         fields = matrix[0]
         values = matrix[1:]
 
         for i in range(len(values)):
-            so_to_update = self.env["sale.order"].search([("name", "=", values[i][0])])
+            po_to_update = self.env["purchase.order"].search(
+                [("name", "=", values[i][0])]
+            )
 
-            if not so_to_update:
+            if not po_to_update:
                 raise UserError(
                     "Attenzione! Nessun ordine di vendita presente con riferimento uguale a : "
                     + values[i][0]
@@ -52,7 +54,7 @@ class ImportSOWizard(models.TransientModel):
             for j in range(len(values[i])):
                 if fields[j] != "state":
                     try:
-                        so_to_update.write({fields[j]: values[i][j]})
+                        po_to_update.write({fields[j]: values[i][j]})
                     except:
                         raise UserError(
                             "Attenzione! Valore errato per il campo: "
@@ -63,7 +65,7 @@ class ImportSOWizard(models.TransientModel):
                             + values[i][j]
                         )
                 else:
-                    self.do_corresponding_state_action(so_to_update, values[i][j])
+                    self.do_corresponding_state_action(po_to_update, values[i][j])
 
     # GESCA
     # metodo per recuperare una matrice da un foglio excel
@@ -76,10 +78,10 @@ class ImportSOWizard(models.TransientModel):
             for r in range(sheet.nrows)
         ]
 
-    def import_so_apply(self):
+    def import_po_apply(self):
         # GESCA
         # se abbiamo flaggato aggiornamento, dobbiamo chiamare un altro metodo
         if self.import_mode != "create" and self.file:
-            return self.update_sale_orders(self.get_matrix())
+            return self.update_purchase_orders(self.get_matrix())
         else:
-            return super().import_so_apply()
+            return super().import_po_apply()

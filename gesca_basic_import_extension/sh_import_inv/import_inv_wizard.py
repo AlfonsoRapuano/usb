@@ -31,7 +31,7 @@ class ImportINVWizardInherit(models.TransientModel):
     import_mode = fields.Selection(
         [("create", "Creazione"), ("update", "Aggiornamento")],
         default="create",
-        string="Modailità importazione",
+        string="Modalità importazione",
         required=True,
     )
 

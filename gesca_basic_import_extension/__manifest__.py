@@ -16,5 +16,6 @@
         "views/views.xml",
         "sh_import_inv/import_inv_wizard.xml",
         "sh_import_so/import_so_wizard.xml",
+        "sh_import_po/import_po_wizard.xml",
     ],
 }
