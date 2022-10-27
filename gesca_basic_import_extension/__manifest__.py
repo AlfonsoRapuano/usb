@@ -13,9 +13,11 @@
     "depends": ["base", "sh_all_in_one_basic_import"],
     # always loaded
     "data": [
-        "views/views.xml",
+        "gesca_update_proj/security/ir.model.access.csv",
         "sh_import_inv/import_inv_wizard.xml",
         "sh_import_so/import_so_wizard.xml",
         "sh_import_po/import_po_wizard.xml",
+        "gesca_update_proj/update_proj_wizard.xml",
+        "views/views.xml",
     ],
 }

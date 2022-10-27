@@ -14,6 +14,18 @@ _logger = logging.getLogger("===== Gesca Import Purchase Order Wizard =====")
 class ImportPOWizard(models.TransientModel):
     _inherit = "import.po.wizard"
 
+    import_type = fields.Selection(
+        [
+            ("csv", "CSV File"),
+            ("excel", "Excel File")
+            # GESCA, mettiamo di default Excel come tipo di file
+            # ], default="csv", string="Import File Type", required=True)
+        ],
+        default="excel",
+        string="Import File Type",
+        required=True,
+    )
+
     # GESCA
     # per permettere un'importazione in aggiornamento e non solo in creazione, dobbiamo creare un nuovo flag
     import_mode = fields.Selection(
@@ -32,7 +44,7 @@ class ImportPOWizard(models.TransientModel):
         elif state == "Cancellato":
             po.button_cancel()
         elif state == "Bozza":
-            po.action_draft()
+            po.button_draft()
 
     # GESCA
     # funzione di aggiornamento di ordini di acquisto già esistenti
