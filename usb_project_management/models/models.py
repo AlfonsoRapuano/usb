@@ -83,8 +83,11 @@ class SaleOrder(models.Model):
         if len(self.company_id) == 1:
             # All orders are in the same company
             self.order_line.sudo().with_company(self.company_id)._timesheet_service_generation()
+            
+            # dobbiamo fare creare progetti solamente se è presente almeno una riga che abbia un progetto template collegato
+            so_line_new_project = self.order_line.filtered(lambda sol: sol.is_service and sol.product_id.service_tracking == 'project_only')
 
-            if not self.project_id: 
+            if not self.project_id and so_line_new_project: 
                 # copia un progetto e lo  aggiunge all'ordine di vendita
                 project = self.env['project.project'].search([('project_order','=', True)]).copy()
                 # X usb ci dirà con quale parola dovremmo sostiurlo

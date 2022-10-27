@@ -1,9 +1,8 @@
 from odoo import fields
 from odoo.tests.common import tagged
-from odoo.addons.account.tests.common import AccountTestInvoicingCommon
+from odoo.addons.gesca_basic_import_extension.tests.common import TestImportCommon
+from odoo.exceptions import UserError
 
-from os import path
-from base64 import b64encode
 import datetime
 
 import logging
@@ -12,16 +11,7 @@ _logger = logging.getLogger("===== Test Import Invoice Wizard =====")
 
 
 @tagged("-at_install", "post_install")
-class TestImportInvoice(AccountTestInvoicingCommon):
-    @classmethod
-    def _data_file(self, filename, encoding=None):
-        mode = "rt" if encoding else "rb"
-        with open(path.join(path.dirname(__file__), filename), mode) as file:
-            data = file.read()
-            if encoding:
-                data = data.encode(encoding)
-            return b64encode(data)
-
+class TestImportInvoice(TestImportCommon):
     @classmethod
     def setUpClass(cls, chart_template_ref=None):
         super(TestImportInvoice, cls).setUpClass()
@@ -115,3 +105,23 @@ class TestImportInvoice(AccountTestInvoicingCommon):
             self.invoice_to_update.invoice_date,
             datetime.datetime.strptime("2025-02-02", "%Y-%m-%d").date(),
         )
+
+    def test_field_error(self):
+
+        file = self._data_file("import_invoice_error.xls")
+
+        self.import_inv_wizard = self.env["import.inv.wizard"].create(
+            {
+                "import_type": "excel",
+                "product_by": "name",
+                "invoice_type": "inv",
+                "account_option": "default",
+                "is_validate": False,
+                "inv_no_type": "auto",
+                "import_mode": "update",
+                "file": file,
+            }
+        )
+        with self.assertRaises(UserError):
+            # testiamo la data e lo stato
+            self.import_inv_wizard.import_inv_apply()

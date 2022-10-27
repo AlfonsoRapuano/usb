@@ -73,8 +73,17 @@ class ImportINVWizardInherit(models.TransientModel):
                 )
             for j in range(len(values[i])):
                 if fields[j] != "state":
-                    invoice_to_update.write({fields[j]: values[i][j]})
-
+                    try:
+                        invoice_to_update.write({fields[j]: values[i][j]})
+                    except:
+                        raise UserError(
+                            "Attenzione! Valore errato per il campo: "
+                            + fields[j]
+                            + " della fattura "
+                            + values[i][0]
+                            + ": "
+                            + values[i][j]
+                        )
                 else:
                     self.do_corresponding_state_action(invoice_to_update, values[i][j])
 

@@ -12,5 +12,9 @@
     # any module necessary for this one to work correctly
     "depends": ["base", "sh_all_in_one_basic_import"],
     # always loaded
-    "data": ["views/views.xml", "sh_import_inv/import_inv_wizard.xml"],
+    "data": [
+        "views/views.xml",
+        "sh_import_inv/import_inv_wizard.xml",
+        "sh_import_so/import_so_wizard.xml",
+    ],
 }
