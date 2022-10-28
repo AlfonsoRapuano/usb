@@ -14,6 +14,18 @@ _logger = logging.getLogger("===== Gesca Import Sale Order Wizard =====")
 class ImportSOWizard(models.TransientModel):
     _inherit = "import.so.wizard"
 
+    import_type = fields.Selection(
+        [
+            ("csv", "CSV File"),
+            ("excel", "Excel File")
+            # GESCA, mettiamo di default Excel come tipo di file
+            # ], default="csv", string="Import File Type", required=True)
+        ],
+        default="excel",
+        string="Import File Type",
+        required=True,
+    )
+
     # GESCA
     # per permettere un'importazione in aggiornamento e non solo in creazione, dobbiamo creare un nuovo flag
     import_mode = fields.Selection(
@@ -57,7 +69,7 @@ class ImportSOWizard(models.TransientModel):
                         raise UserError(
                             "Attenzione! Valore errato per il campo: "
                             + fields[j]
-                            + " della fattura "
+                            + " dell'ordine "
                             + values[i][0]
                             + ": "
                             + values[i][j]

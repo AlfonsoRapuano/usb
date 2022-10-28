@@ -48,3 +48,29 @@ class TestPurchaseImport(TestImportCommon):
 
         self.import_po_wizard.import_po_apply()
         self.assertEqual(self.purchase_order.state, "purchase")
+
+        file = self._data_file("cancel_purchase_order.xls")
+
+        self.import_po_wizard = self.env["import.po.wizard"].create(
+            {
+                "import_type": "excel",
+                "import_mode": "update",
+                "file": file,
+            }
+        )
+
+        self.import_po_wizard.import_po_apply()
+        self.assertEqual(self.purchase_order.state, "cancel")
+
+        file = self._data_file("reset_draft_purchase_order.xls")
+
+        self.import_po_wizard = self.env["import.po.wizard"].create(
+            {
+                "import_type": "excel",
+                "import_mode": "update",
+                "file": file,
+            }
+        )
+
+        self.import_po_wizard.import_po_apply()
+        self.assertEqual(self.purchase_order.state, "draft")
