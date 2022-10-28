@@ -18,6 +18,7 @@
         "sh_import_so/import_so_wizard.xml",
         "sh_import_po/import_po_wizard.xml",
         "gesca_update_proj/update_proj_wizard.xml",
+        "gesca_update_proj/update_proj_task_wizard.xml",
         "views/views.xml",
     ],
 }
