@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        <record id="view_sale_update_fields" model="ir.ui.view">
+            <field name="name">Aggiorna Campi</field>
+            <field name="model">update.field.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Aggiorna Campi Ordini di Vendita">
+                    <group>
+                        <field name="sale_order_state" widget="radio" />
+                    </group>
+                    
+                    <footer>
+                        <button name="apply_changes" string="Applica" type="object" class="btn-primary"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_update_field_wizard" model="ir.actions.act_window">
+            <field name="name">Aggiorna Campi</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">update.field.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <!-- TODO: check if we need this -->
+            <field name="binding_model_id" ref="sale.model_sale_order" />
+            <field name="binding_view_types">list</field>
+        </record>
+
+</odoo>

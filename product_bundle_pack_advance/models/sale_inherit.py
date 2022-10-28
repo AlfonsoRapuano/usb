@@ -7,6 +7,9 @@ from odoo.exceptions import UserError
 from odoo.tools import float_is_zero, float_compare, DEFAULT_SERVER_DATETIME_FORMAT
 from odoo import SUPERUSER_ID
 
+import logging
+
+_logger = logging.getLogger("===== Product Bundle Pack =====")
 
 
 class ProcurementRule(models.Model):
@@ -133,12 +136,15 @@ class Sale_order_line(models.Model):
 
     def _compute_qty_delivered(self):
         res = super(Sale_order_line,self)._compute_qty_delivered();
-        stock = self.env['stock.picking'].search([("origin","=",self.order_id.name)]);
-        config = self.env['res.config.settings'].search([],order="id desc", limit=1);
-        if stock:
-            if config.stock_option_pack == 'bundle_items':
-                if stock.state == 'done':
-                    for rec in self:
+        # GESCA fix della situazione in cui ci sono righe ordine di vendita afferenti a diversi ordini in _compute_qty_delivered
+        for rec in self:
+            stock = self.env['stock.picking'].search([("origin","=",rec.order_id.name)]);
+            config = self.env['res.config.settings'].search([],order="id desc", limit=1);
+            if stock:
+                if config.stock_option_pack == 'bundle_items':
+                    if stock.state == 'done':
+                        #for rec in self:
+                        #    rec.qty_delivered = rec.product_uom_qty;
                         rec.qty_delivered = rec.product_uom_qty;
         return res;
 
