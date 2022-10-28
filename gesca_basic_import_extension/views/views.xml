@@ -15,7 +15,7 @@
                 </div>
                 
                 <div class="col-3">
-                    <button name="%(gesca_basic_import_extension.gesca_import_proj_action)d" type="action" string="Update Project Task" class="btn btn-primary">
+                    <button name="%(gesca_basic_import_extension.gesca_import_proj_task_action)d" type="action" string="Update Project Task" class="btn btn-primary">
                         Update Project Task
                     </button>
                 </div>
